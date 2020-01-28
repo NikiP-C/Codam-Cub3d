@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 13:59:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/16 13:52:46 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/01/27 15:36:39 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ t_texture	*get_path(char b, int fd, t_data *data)
 		read(fd, &b, 1);
 	}
 	str[i] = 0;
-	texture->img = mlx_png_file_to_image(data->mlx_data->mlx, str, &texture->width, &texture->height);
-	texture->img_addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->size_line, &texture->endian);
+	texture->img = mlx_png_file_to_image(data->mlx_data->mlx,\
+	str, &texture->width, &texture->height);
+	texture->img_addr = mlx_get_data_addr(texture->img,\
+	&texture->bits_per_pixel, &texture->size_line, &texture->endian);
 	free(str);
 	return (texture);
 }
@@ -105,15 +107,16 @@ t_map_data	*get_map(int fd, t_map_data *map_data, char c)
 	int		i;
 	int		malloc_size;
 
-	malloc_size = 1000;
+	malloc_size = 100;
 	i = 1;
-	str = malloc(malloc_size);
+	str = ft_calloc(malloc_size, 1);
 	str[0] = c;
 	while (read(fd, &c, 1))
 	{
 		if (c != ' ')
 		{
 			str[i] = c;
+			if (c == 2)
 			i++;
 			if (i == (malloc_size - 1))
 			{
@@ -123,8 +126,11 @@ t_map_data	*get_map(int fd, t_map_data *map_data, char c)
 			}
 		}
 	}
-	str[i] = 0;
+	str[i] = '\0';
+	printf("i = %i\n", i);
 	map_data->map = str;
+	i = 0;
+
 	return (map_data);
 }
 
@@ -149,12 +155,14 @@ int		get_dem(int fd, char c)
 		return (0);
 }
 
-t_data		*read_map(t_data *data)
+t_data		*read_map(t_data *data, char *str)
 {
 	int		fd;
 	char	c;
 
-	fd = open("cud3d_map", O_RDONLY);
+	fd = open(str, O_RDONLY);
+	if (fd < 0)
+		exit(print_error(8, 0));
 	while (read(fd, &c, 1))
 	{
 		if (c == 'N' || c == 'S' || c == 'E' || c == 'W' ||\
@@ -165,6 +173,7 @@ t_data		*read_map(t_data *data)
 		if (c == '1')
 		{
 			data->map_data = get_map(fd, data->map_data, c);
+			close(fd);
 			return (data);
 		}
 		if (c == 'R')
@@ -174,5 +183,5 @@ t_data		*read_map(t_data *data)
 		}
 	}
 	close(fd);
-	return (0);
+	exit(print_error(9, 0));
 }

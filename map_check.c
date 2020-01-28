@@ -6,59 +6,18 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:17:20 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/06 13:54:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/01/27 15:35:31 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
-static int	check_end_of_line(char *map, t_map_data *data, int i)
+t_map_data	*get_pos(int i, int j, t_map_data *data, char c)
 {
-	int tmp;
-
-	if ((i + 1) % data->x != 0)
-		return (0);
-	tmp = i - 1;
-	if (map[tmp] != '1')
-		return (0);
-	tmp = i + 1;
-	if (map[tmp] != '1' && map[tmp] != 0)
-		return (0);
-	return (1);
-}
-
-t_map_data	*make_map2d(t_map_data *data)
-{
-	int i;
-	int j;
-	int k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	data->map2d = malloc(sizeof(char *) * (data->y + 1));
-	while (data->map[k] != 0)
-	{
-		data->map2d[j] = malloc(sizeof(char) * data->x);
-		while (data->map[k] != '\n' && data->map[k] != '\0')
-		{
-			data->map2d[j][i] = data->map[k];
-			k++;
-			i++;
-		}
-		data->map2d[j][i] = 0;
-		i = 0;
-		j++;
-		k++;
-	}
-	data->map2d[j] = 0;
-	return (data);
-}
-
-t_map_data	*get_pos(int i, t_map_data *data, char c)
-{
-	data->pos_y = i / data->x;
-	data->pos_x = i % data->x;
+	data->pos_y = j + 0.5;
+	data->pos_x = i + 0.5;
+	data->plane_x = 0.66;
+	data->plane_y = 0.0;
 	if (c == 'N' || c == 'S')
 		data->dir_x = 0;
 	else
@@ -68,37 +27,66 @@ t_map_data	*get_pos(int i, t_map_data *data, char c)
 	else if (c == 'S')
 		data->dir_y = 1;
 	else if (c == 'W')
+	{
 		data->dir_x = -1;
+		data->plane_x = 0.0;
+		data->plane_y = -0.66;
+	}
 	else if (c == 'E')
+	{
 		data->dir_x = 1;
+		data->plane_x = 0.0;
+		data->plane_y = 0.66;
+	}
 	return (data);
 }
 
-int			check_map(t_map_data *data)
+char	*ft_strchr_no_null(const char *s, int c)
 {
-	int i;
+	int		i;
+	char	*str2;
 
 	i = 0;
+	str2 = (char*)s;
+	while (str2[i] != 0)
+	{
+		if (str2[i] == c)
+		{
+			return (str2 + i);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int		check_map(t_map_data *data)
+{
+	int i;
+	int longestline;
+
+	i = 0;
+	longestline = 0;
 	while (data->map[i] != '\0')
 	{
-		if (data->map[i] == 'N' || data->map[i] == 'S' || data->map[i] == 'E' || data->map[i] == 'W')
+		if (ft_strchr_no_null("NESW", data->map[i]))
 		{
 			if (data->pos_x != 0)
-				return (0);
-			data = get_pos(i, data, data->map[i]);
+				exit(print_error(2, 0));
+			data->pos_x = 1;
 		}
 		else if (data->map[i] == '\n')
 		{
-			if (data->x == 0)
-				data->x = i + 1;
-			if (check_end_of_line(data->map, data, i) == 0)
-				return (0);
+			if (data->x < longestline)
+				data->x = longestline;
+			longestline = 0;
 		}
 		else if (data->map[i] < '0' || data->map[i] > '2')
-			return (0);
+			return (print_error(3, data->map[i]));
 		i++;
+		longestline++;
 	}
+	if (data->pos_x == 0)
+		exit(print_error(4, 0));
 	data->y = ((i + 1) / data->x);
-	data = make_map2d(data);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 16:00:18 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/16 19:49:44 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/01/27 14:54:19 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include "cud3d.h"
 #include <minilibx_mms_20191025_beta/mlx.h>
-#include <math.h>
 
 t_data	*fill_data(t_data *data)
 {
@@ -39,105 +38,60 @@ t_data	*fill_data(t_data *data)
 	data->mlx_data = mlx_data;
 	data->dda = dda;
 	data->wall_size = wall_size;
+	data->map_data->sprite = NULL;
+	data->map_data->amouth_of_sprites = 0;
 	return (data);
 }
 
-int move_forward(t_data *data)
+int		mouse_press(int button, int x, int y, void *param)
 {
-	if (data->map_data->map2d[(int)(data->map_data->pos_y)]\
-		[(int)(data->map_data->pos_x + data->map_data->dir_x * 0.2)] != '1')
-	{
-		data->map_data->pos_x += data->map_data->dir_x * 0.2;
-	}
-	if (data->map_data->map2d[(int)(data->map_data->pos_y + data->map_data->dir_y * 0.2)]\
-		[(int)data->map_data->pos_x] != '1')
-	{
-		data->map_data->pos_y += data->map_data->dir_y * 0.2;
-	}
-	make_frame(data);
+	if (x < 0)
+		return (0);
 	return (0);
-} 
-
-int move_backwards(t_data *data)
-{
-	if (data->map_data->map2d[(int)(data->map_data->pos_y)]\
-		[(int)(data->map_data->pos_x - data->map_data->dir_x * 0.2)] != '1')
-	{
-		data->map_data->pos_x -= data->map_data->dir_x * 0.2;
-	}
-	if (data->map_data->map2d[(int)(data->map_data->pos_y - data->map_data->dir_y * 0.2)]\
-		[(int)data->map_data->pos_x] != '1')
-	{
-		data->map_data->pos_y -= data->map_data->dir_y * 0.2;
-	}
-	make_frame(data);
-	return (0);
-}
-
-int turn_left(t_data *data)
-{
-	double old_dirx;
-	double old_planex;
-
-	old_dirx = data->map_data->dir_x;
-	old_planex = data->map_data->plane_x;
-	data->map_data->dir_x = data->map_data->dir_x * cos(0.1) - data->map_data->dir_y * sin(0.1);
-	data->map_data->dir_y = old_dirx * sin(0.1) + data->map_data->dir_y * cos(0.1);
-	data->map_data->plane_x = old_planex * cos(0.1) - data->map_data->plane_y * sin(0.1);
-	data->map_data->plane_y = old_planex * sin(0.1) + data->map_data->plane_y * cos(0.1);
-	make_frame(data);
-	return (0);
-}
-
-int turn_right(t_data *data)
-{
-	double old_dirx;
-	double old_planex;
-
-	old_dirx = data->map_data->dir_x;
-	old_planex = data->map_data->plane_x;
-	data->map_data->dir_x = data->map_data->dir_x * cos(-0.1) - data->map_data->dir_y * sin(-0.1);
-	data->map_data->dir_y = old_dirx * sin(-0.1) + data->map_data->dir_y * cos(-0.1);
-	data->map_data->plane_x = old_planex * cos(-0.1) - data->map_data->plane_y * sin(-0.1);
-	data->map_data->plane_y = old_planex * sin(-0.1) + data->map_data->plane_y * cos(-0.1);
-	make_frame(data);
-	return (0);
-}
-
-void	end_session(t_data *data)
-{
-	mlx_destroy_window(data->mlx_data->mlx, data->mlx_data->mlx_win);
-}
-
-int		key_press(int keycode, void *param)
-{
-	if (keycode == 13 || keycode == 126)
-		move_forward(param);
-	if (keycode == 1 || keycode == 125)
-		move_backwards(param);
-	if (keycode == 0 || keycode == 123)
-		turn_left(param);
-	if (keycode == 2 || keycode == 124)
-		turn_right(param);
-	if (keycode == 53 || keycode == 12)
-		end_session(param);
-	return (1);
 }
 
 void	make_window(t_data *data)
 {
-	int color;
+	data->dda->jump = 1.0;
 	data->mlx_data->mlx_win = mlx_new_window(data->mlx_data->mlx,\
-		data->map_data->dem_x, data->map_data->dem_y, "Cud3d");
+		data->map_data->dem_x, data->map_data->dem_y, "Cub3d");
 	make_frame(data);
 	mlx_hook(data->mlx_data->mlx_win, 2, 1l << 0, key_press, data);
+	mlx_hook(data->mlx_data->mlx_win, 4, 1l << 0, mouse_press, data);
+	mlx_hook(data->mlx_data->mlx_win, 17, 1l << 17, end_session, data);
 	mlx_loop(data->mlx_data->mlx);
 }
 
-int				main(void)
+int		ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+
+	str1 = (unsigned char*)s1;
+	str2 = (unsigned char*)s2;
+	i = 0;
+	while (str1[i] == str2[i])
+	{
+		if (str1[i] == 0 && str2[i] == 0)
+			return (0);
+		i++;
+	}
+	return (str1[i] - str2[i]);
+}
+
+t_data	*check_save(char *str, t_data *data)
+{
+	if (!ft_strcmp(str, "--save"))
+	{
+		printf("AAA\n");
+	}
+	return (data);
+}
+
+int		main(int ac, char **av)
 {
 	t_data	*data;
-	int		error;
 
 	data = malloc(sizeof(t_data));
 	if (data != 0)
@@ -148,11 +102,18 @@ int				main(void)
 			return (0);
 	}
 	if (data != 0)
-		data = read_map(data);
+		data = read_map(data, av[1]);
+	if (ac > 2)
+		data = check_save(av[2], data);
 	if (data == 0)
 		return (0);
-	error = check_map(data->map_data);
-	data->map_data->plane_x = -1.0;
-	data->map_data->plane_y = 0.66;
+	if (check_map(data->map_data) == 0)
+		return (0);
+	data->dda->buffer = malloc(sizeof(double) * data->map_data->dem_x);
+	if (data->dda->buffer == 0)
+		return (0);
+	data->map_data = make_map2d(data->map_data);
+	if (data->map_data == 0)
+		return (0);
 	make_window(data);
 }

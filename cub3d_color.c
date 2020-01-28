@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/16 17:00:28 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/01/22 12:29:20 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,35 @@ t_data	*pick_color(t_data *data, int x)
 	return (data);
 }
 
+void	put_healthbar(t_data *data)
+{
+	int end[2];
+	int y;
+	int x;
+
+	end[0] = data->map_data->dem_y / 50 * 48;
+	end[1] = data->map_data->dem_x / 6 * 5;
+	y = data->map_data->dem_y / 50 * 47;
+	while (y < end[0])
+	{
+		x = data->map_data->dem_x / 6;
+		while (x != end[1])
+		{
+			if (x < data->map_data->dem_x / 6 * 4)
+				put_pixel(data, x, y, 0x0000FF00);
+			else
+				put_pixel(data, x, y, 0x00FF0000);
+			x++;
+		}
+		y++;
+	}
+}
+
 t_data	*pick_texture(t_data *data, int x, t_texture *tex)
 {
 	int				y;
 	int				tex_y;
 	unsigned int	color;
-	char			*img;
 	char			*test;
 	double 			step;
 	double			texpos;
@@ -68,24 +91,20 @@ t_data	*pick_texture(t_data *data, int x, t_texture *tex)
 	step = (1.0 * tex->height) / data->wall_size->lineheight;
 	texpos = (data->wall_size->drawstart - (data->map_data->dem_y / 2.0) + (data->wall_size->lineheight / 2.0)) * step;
 	y = 0;
-	while (y < data->wall_size->drawstart)
-	{
-		put_pixel(data, x, y, data->textures->ceiling);
-		y++;
-	}
-	while (y < data->wall_size->drawend)
-	{
-		tex_y = (int)texpos & (tex->height - 1);
-		texpos += step;
-		test = tex->img_addr + tex->size_line * tex_y + tex_x * (tex->bits_per_pixel / 8);
-		color = *((int *)test);
-		//printf("color = %x\n", color);
-		put_pixel(data, x, y, color);
-		y++;
-	}
 	while (y < data->map_data->dem_y)
 	{
-		put_pixel(data, x, y, data->textures->floor);
+		if (y < data->wall_size->drawstart)
+			put_pixel(data, x, y, data->textures->ceiling);
+		else if (y < data->wall_size->drawend)
+		{
+			tex_y = (int)texpos & (tex->height - 1);
+			texpos += step;
+			test = tex->img_addr + tex->size_line * tex_y + tex_x * (tex->bits_per_pixel / 8);
+			color = *((int *)test);
+			put_pixel(data, x, y, color);
+		}
+		else
+			put_pixel(data, x, y, data->textures->floor);
 		y++;
 	}
 	return (data);

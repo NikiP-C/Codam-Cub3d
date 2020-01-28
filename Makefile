@@ -6,16 +6,17 @@
 #    By: nphilipp <nphilipp@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/06 14:01:22 by nphilipp       #+#    #+#                 #
-#    Updated: 2020/01/16 17:21:51 by nphilipp      ########   odam.nl          #
+#    Updated: 2020/01/27 21:05:51 by nphilipp      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-SRC = new_raycaster.c cud3d_read_map.c cud3d_utils.c main_cud3d.c \
-map_check.c cub3d_color.c 
+SRC = cub3d_raycaster.c cud3d_read_map.c cud3d_utils.c main_cud3d.c \
+map_check.c cub3d_color.c srcs/cub3d_movement.c srcs/cud3d_keypress.c \
+cub3d_sprites.c 2darray_printer.c cub3d_2darray.c ft_calloc.c
 
-FLAGS = -O3
+FLAGS = -O3 -g 
 
 INC = /minilibx_mms_20191025_beta/ -Lminilibx_mms_20191025_beta -lmlx
 
@@ -28,5 +29,8 @@ clean: fclean
 
 fclean:
 	rm -f cud3d
+
+norm:
+	norminette $(SRC)
 
 re: fclean all
