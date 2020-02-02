@@ -6,54 +6,90 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/24 17:30:21 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 20:52:06 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 19:50:09 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
+t_map_data	*find_sprites(t_map_data *data)
+{
+	int		j;
+	int		i;
+	int		l;
+
+	j = 0;
+	l = 0;
+	data->spr = ft_calloc(data->amouth_of_sprites, sizeof(t_vs));
+	while (data->map2d[j] != NULL)
+	{
+		i = 0;
+		while (data->map2d[j][i] != 0)
+		{
+			if (data->map2d[j][i] == '2')
+			{
+				data->spr[l].x = i + 0.5;
+				data->spr[l].y = j + 0.5;
+				l++;
+			}
+			i++;
+		}
+		j++;
+	}
+	return (data);
+}
+
+char		*make_string(t_map_data *data, int *k, int j)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = ft_calloc(data->x + 1, sizeof(char));
+	while (data->map[*k] != '\n' && data->map[*k] != 0)
+	{
+		str[i] = data->map[*k];
+		i++;
+		(*k)++;
+		if (ft_strchr_no_null("NESW", data->map[*k]))
+		{
+			data = get_pos(i, j, data, data->map[*k]);
+			data->map[*k] = '0';
+		}
+	}
+	str[i] = 0;
+	return (str);
+}
+
 t_map_data	*make_map2d(t_map_data *data)
 {
-	int j;
-	int k;
-	int i;
-	
+	int		j;
+	int		k;
+
 	j = 0;
 	k = 0;
 	data->map2d = ft_calloc(data->y + 1, sizeof(char *));
 	data->map2d[j] = ft_calloc(data->x + 1, sizeof(char));
 	while (data->map[k] != 0)
 	{
-		i = 0;
-		while (data->map[k] != '\n' && data->map[k] != 0)
+		if (data->map[k] != '\n' && data->map[k] != 0)
 		{
-			data->map2d[j][i] = data->map[k];
-			k++;
-			i++;
-			if (data->map[k] == '2')
-				data = sprite_data(data, j, i);
-			if (ft_strchr_no_null("NESW", data->map[k]))
-			{
-				data = get_pos(i, j, data, data->map[k]);
-				data->map[k] = '0';
-			}
-		}
-		if (i != 0)
-		{
-			data->map2d[j][i] = 0;
+			data->map2d[j] = make_string(data, &k, j);
 			j++;
-			data->map2d[j] = ft_calloc(data->x + 1, sizeof(char));
 		}
-		k++;
+		else if (data->map[k] == '\n')
+			k++;
 	}
 	data->map2d[j] = NULL;
+	data->y = j;
 	check_top_bottom(data);
 	is_map_closed(data);
 	free(data->map);
+	data = find_sprites(data);
 	return (data);
 }
 
-void	check_line(int j, int i, t_map_data *data)
+void		check_line(int j, int i, t_map_data *data)
 {
 	int k;
 
@@ -69,7 +105,7 @@ void	check_line(int j, int i, t_map_data *data)
 	}
 }
 
-void	is_map_closed(t_map_data *data)
+void		is_map_closed(t_map_data *data)
 {
 	int i;
 	int j;
@@ -86,12 +122,11 @@ void	is_map_closed(t_map_data *data)
 	}
 }
 
-int	check_top_bottom(t_map_data *data)
+int			check_top_bottom(t_map_data *data)
 {
 	int i;
 
 	i = 0;
-	twod_array_printer(data->map2d);
 	while (data->map2d[0][i])
 	{
 		if (data->map2d[0][i] != '1')

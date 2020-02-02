@@ -6,17 +6,17 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 13:59:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 15:36:39 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 20:42:56 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
-t_texture	*get_path(char b, int fd, t_data *data)
+t_texture		*get_path(char b, int fd, t_data *data)
 {
-	char	*str;
-	int		i;
-	t_texture *texture;
+	char		*str;
+	int			i;
+	t_texture	*texture;
 
 	i = 0;
 	texture = malloc(sizeof(t_texture));
@@ -39,7 +39,7 @@ t_texture	*get_path(char b, int fd, t_data *data)
 	return (texture);
 }
 
-int		get_num(int fd, char *c)
+int				get_num(int fd, char *c)
 {
 	int num;
 
@@ -52,7 +52,7 @@ int		get_num(int fd, char *c)
 	return (num);
 }
 
-int		get_color(int fd, char c)
+int				get_color(int fd, char c)
 {
 	int r;
 	int g;
@@ -101,7 +101,15 @@ t_textures_data	*get_textures(t_data *data, int fd, char c)
 	return (data->textures);
 }
 
-t_map_data	*get_map(int fd, t_map_data *map_data, char c)
+char			*end_string(int *malloc_size, char *str, int i)
+{
+	str[i] = 0;
+	*malloc_size *= 2;
+	str = ft_realloc(str, *malloc_size);
+	return (str);
+}
+
+t_map_data		*get_map(int fd, t_map_data *map_data, char c)
 {
 	char	*str;
 	int		i;
@@ -116,25 +124,20 @@ t_map_data	*get_map(int fd, t_map_data *map_data, char c)
 		if (c != ' ')
 		{
 			str[i] = c;
-			if (c == 2)
+			if (c == '2')
+				map_data->amouth_of_sprites++;
 			i++;
 			if (i == (malloc_size - 1))
-			{
-				str[i] = 0;
-				malloc_size *= 2;
-				str = ft_realloc(str, malloc_size);
-			}
+				str = end_string(&malloc_size, str, i);
 		}
 	}
 	str[i] = '\0';
-	printf("i = %i\n", i);
 	map_data->map = str;
 	i = 0;
-
 	return (map_data);
 }
 
-int		get_dem(int fd, char c)
+int				get_dem(int fd, char c)
 {
 	int num;
 
@@ -155,7 +158,7 @@ int		get_dem(int fd, char c)
 		return (0);
 }
 
-t_data		*read_map(t_data *data, char *str)
+t_data			*read_map(t_data *data, char *str)
 {
 	int		fd;
 	char	c;
@@ -167,9 +170,7 @@ t_data		*read_map(t_data *data, char *str)
 	{
 		if (c == 'N' || c == 'S' || c == 'E' || c == 'W' ||\
 		c == 'F' || c == 'C')
-		{
 			data->textures = get_textures(data, fd, c);
-		}
 		if (c == '1')
 		{
 			data->map_data = get_map(fd, data->map_data, c);

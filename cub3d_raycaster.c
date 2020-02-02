@@ -6,14 +6,14 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 21:08:48 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 20:56:17 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 #include <math.h>
 
-t_dda	*decide_step(t_dda *dda, t_map_data *data)
+t_dda		*decide_step(t_dda *dda, t_map_data *data)
 {
 	if (dda->ray_dir_x < 0)
 	{
@@ -38,7 +38,7 @@ t_dda	*decide_step(t_dda *dda, t_map_data *data)
 	return (dda);
 }
 
-t_dda	*find_collison(t_dda *dda, t_data *data)
+t_dda		*find_collison(t_dda *dda, t_data *data)
 {
 	dda->hit = 0;
 	while (dda->hit == 0)
@@ -82,7 +82,7 @@ t_wall_size	*calculate_wall(t_data *data, t_wall_size *wall_size)
 	return (wall_size);
 }
 
-t_data	*raycasting(t_data *data)
+t_data		*raycasting(t_data *data)
 {
 	int		x;
 	double	camera_x;
@@ -106,15 +106,20 @@ t_data	*raycasting(t_data *data)
 		data->dda->buffer[x] = data->dda->perpwall_dist;
 		x++;
 	}
-	//data = sprites(data);
+	data = sprites(data);
 	put_healthbar(data);
 	return (data);
 }
 
-void	make_frame(t_data *data)
+void		make_frame(t_data *data)
 {
+	if (data->dda->life <= 0)
+	{
+		//death_screen
+		;
+	}
 	data->mlx_data->mlx_img = \
-		mlx_new_image(data->mlx_data->mlx, data->map_data->dem_x,\
+		mlx_new_image(data->mlx_data->mlx, data->map_data->dem_x,
 		data->map_data->dem_x);
 	data->mlx_data->mlx_addr = \
 		mlx_get_data_addr(data->mlx_data->mlx_img, \

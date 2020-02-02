@@ -6,11 +6,24 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:17:20 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 15:35:31 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 20:42:25 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
+
+t_map_data	*get_n_s(t_map_data *data, char c)
+{
+	data->dir_x = 0;
+	if (c == 'N')
+		data->dir_y = -1;
+	else if (c == 'S')
+	{
+		data->dir_y = 1;
+		data->plane_x = -0.66;
+	}
+	return (data);
+}
 
 t_map_data	*get_pos(int i, int j, t_map_data *data, char c)
 {
@@ -19,29 +32,23 @@ t_map_data	*get_pos(int i, int j, t_map_data *data, char c)
 	data->plane_x = 0.66;
 	data->plane_y = 0.0;
 	if (c == 'N' || c == 'S')
-		data->dir_x = 0;
-	else
-		data->dir_y = 0;
-	if (c == 'N')
-		data->dir_y = -1;
-	else if (c == 'S')
-		data->dir_y = 1;
+		get_n_s(data, c);
 	else if (c == 'W')
 	{
 		data->dir_x = -1;
 		data->plane_x = 0.0;
-		data->plane_y = -0.66;
+		data->plane_y = 0.66;
 	}
 	else if (c == 'E')
 	{
 		data->dir_x = 1;
 		data->plane_x = 0.0;
-		data->plane_y = 0.66;
+		data->plane_y = -0.66;
 	}
 	return (data);
 }
 
-char	*ft_strchr_no_null(const char *s, int c)
+char		*ft_strchr_no_null(const char *s, int c)
 {
 	int		i;
 	char	*str2;
@@ -59,7 +66,17 @@ char	*ft_strchr_no_null(const char *s, int c)
 	return (0);
 }
 
-int		check_map(t_map_data *data)
+t_map_data	*find_longest_line(int *longest_line, t_map_data *data, int i)
+{
+	if (data->x < *longest_line)
+		data->x = *longest_line;
+	*longest_line = 0;
+	if (data->map[i + 1] != '\n')
+		data->y++;
+	return (data);
+}
+
+int			check_map(t_map_data *data)
 {
 	int i;
 	int longestline;
@@ -75,11 +92,7 @@ int		check_map(t_map_data *data)
 			data->pos_x = 1;
 		}
 		else if (data->map[i] == '\n')
-		{
-			if (data->x < longestline)
-				data->x = longestline;
-			longestline = 0;
-		}
+			find_longest_line(&longestline, data, i);
 		else if (data->map[i] < '0' || data->map[i] > '2')
 			return (print_error(3, data->map[i]));
 		i++;
@@ -87,6 +100,5 @@ int		check_map(t_map_data *data)
 	}
 	if (data->pos_x == 0)
 		exit(print_error(4, 0));
-	data->y = ((i + 1) / data->x);
 	return (1);
 }

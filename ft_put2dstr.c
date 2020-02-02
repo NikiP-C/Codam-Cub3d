@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   2darray_printer.c                                  :+:    :+:            */
+/*   ft_put2dstr.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/21 17:54:34 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/21 17:59:59 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 20:43:24 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-int ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int i;
 

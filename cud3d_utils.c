@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 14:00:39 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 18:27:32 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/01/31 14:21:59 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,39 +53,6 @@ int		print_error(int error_code, char c)
 	return (0);
 }
 
-void	ft_lstadd_back(t_sprite **alst, t_sprite *new)
-{
-	t_sprite	*temp;
-
-	if (alst == NULL)
-		return ;
-	temp = *alst;
-	if (temp == NULL)
-	{
-		*alst = new;
-		return ;
-	}
-	while (temp->next != NULL)
-	{
-		temp = temp->next;
-	}
-	temp->next = new;
-	return ;
-}
-
-t_map_data	*sprite_data(t_map_data *data, int j, int i)
-{
-	t_sprite *tmp;
-
-	tmp = malloc(sizeof(t_sprite));
-	data->amouth_of_sprites++;
-	tmp->y = j + 0.5;
-	tmp->x = i + 0.5;
-	tmp->next = NULL;
-	ft_lstadd_back(&data->sprite, tmp);
-	return (data);
-}
-
 char	*ft_realloc(char *str, int malloc_size)
 {
 	char	*newstr;
@@ -100,4 +67,11 @@ char	*ft_realloc(char *str, int malloc_size)
 	}
 	free(str);
 	return (newstr);
+}
+
+double	ft_abs(double num)
+{
+	if (num < 0)
+		num *= -1;
+	return (num);
 }

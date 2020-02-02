@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/27 14:44:36 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 14:55:09 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/01/31 23:04:28 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void		*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
 	char	*str;
 

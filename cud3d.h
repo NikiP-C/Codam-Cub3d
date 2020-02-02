@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/28 12:02:22 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 20:48:50 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,17 @@ typedef struct		s_sprite_data
 	int				d;
 }					t_sprite_data;
 
-typedef struct		s_sprite
-{
-	double			x;
-	double			y;
-	double			distance;
-	struct s_sprite *next;
-}					t_sprite;
-
 typedef struct 		s_vs
 {
-	double 			y;
+	double			y;
 	double			x;
 }					t_vs;
+
+typedef struct 		s_vsi
+{
+	int				y;
+	int				x;
+}					t_vsi;
 
 typedef struct	s_map_data
 {
@@ -68,9 +66,7 @@ typedef struct	s_map_data
 	double		plane_y;
 	double		plane_x;
 	char		*map;
-	double		**spr;
-	t_sprite	*sprite;
-	t_vs		*head;
+	t_vs		*spr;
 	char		**map2d;
 	int			amouth_of_sprites;
 }				t_map_data;
@@ -103,6 +99,7 @@ typedef struct	s_dda
 	int			hit;
 	int			side;
 	double		jump;
+	double		life;
 }				t_dda;
 
 typedef struct	s_textures_data
@@ -144,34 +141,36 @@ typedef struct		s_data
 	t_wall_size		*wall_size;
 }					t_data;
 
-int			check_map(t_map_data *data);
-void		make_frame(t_data *data);
-t_data		*read_map(t_data *data, char *str);
-char		*ft_realloc(char *str, int malloc_size);
-t_data		*pick_color(t_data *data, int x);
-void		put_pixel(t_data *data, int x, int y, int color);
-t_data		*pick_texture(t_data *data, int x, t_texture *tex);
-t_data 		*choose_side(t_data *data, int x);
-t_data 		*sprites(t_data *data);
-int			print_error(int error_code, char c);
-int			key_press(int keycode, void *param);
-int			move_forward(t_data *data);
-int			move_backwards(t_data *data);
-int			turn_left(t_data *data);
-int			turn_right(t_data *data);
-t_map_data	*make_map2d(t_map_data *data);
-void		put_healthbar(t_data *data);
-t_map_data	*sprite_data(t_map_data *data, int j, int i);
-t_data		*sprites(t_data *data);
-int			move_left(t_data *data);
-int			move_right(t_data *data);
-void		twod_array_printer(char **array);
-int			check_top_bottom(t_map_data *data);
-int			end_session(t_data *data);
-char		*ft_strchr_no_null(const char *s, int c);
-t_map_data	*get_pos(int i, int j, t_map_data *data, char c);
-void		is_map_closed(t_map_data *data);
-void		*ft_calloc(size_t count, size_t size);
-void		ft_lstadd_back(t_sprite **alst, t_sprite *new);
+int				check_map(t_map_data *data);
+void			make_frame(t_data *data);
+t_data			*read_map(t_data *data, char *str);
+char			*ft_realloc(char *str, int malloc_size);
+t_data			*pick_color(t_data *data, int x);
+void			put_pixel(t_data *data, int x, int y, int color);
+t_data			*pick_texture(t_data *data, int x, t_texture *tex);
+t_data 			*choose_side(t_data *data, int x);
+t_data 			*sprites(t_data *data);
+int				print_error(int error_code, char c);
+int				key_press(int keycode, void *param);
+int				move_forward(t_data *data);
+int				move_backwards(t_data *data);
+int				turn_left(t_data *data);
+int				turn_right(t_data *data);
+t_map_data		*make_map2d(t_map_data *data);
+void			put_healthbar(t_data *data);
+t_map_data		*sprite_data(t_map_data *data, int j, int i);
+t_data			*sprites(t_data *data);
+int				move_left(t_data *data);
+int				move_right(t_data *data);
+void			twod_array_printer(char **array);
+int				check_top_bottom(t_map_data *data);
+int				end_session(t_data *data);
+char			*ft_strchr_no_null(const char *s, int c);
+t_map_data		*get_pos(int i, int j, t_map_data *data, char c);
+void			is_map_closed(t_map_data *data);
+void			*ft_calloc(size_t count, size_t size);
+void			project_sprites(t_data *data, int *order);
+t_sprite_data	*sprite_start_end(t_data *data, t_sprite_data *s_data);
+t_sprite_data	*get_info(t_sprite_data *s_data, t_data *data, t_vs sprite);
 
 #endif

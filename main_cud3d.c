@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 16:00:18 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/27 14:54:19 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/01 20:49:31 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,10 @@ t_data	*fill_data(t_data *data)
 	data->textures = textures_data;
 	data->mlx_data = mlx_data;
 	data->dda = dda;
+	data->dda->life = 1;
 	data->wall_size = wall_size;
-	data->map_data->sprite = NULL;
 	data->map_data->amouth_of_sprites = 0;
 	return (data);
-}
-
-int		mouse_press(int button, int x, int y, void *param)
-{
-	if (x < 0)
-		return (0);
-	return (0);
 }
 
 void	make_window(t_data *data)
@@ -57,7 +50,6 @@ void	make_window(t_data *data)
 		data->map_data->dem_x, data->map_data->dem_y, "Cub3d");
 	make_frame(data);
 	mlx_hook(data->mlx_data->mlx_win, 2, 1l << 0, key_press, data);
-	mlx_hook(data->mlx_data->mlx_win, 4, 1l << 0, mouse_press, data);
 	mlx_hook(data->mlx_data->mlx_win, 17, 1l << 17, end_session, data);
 	mlx_loop(data->mlx_data->mlx);
 }
