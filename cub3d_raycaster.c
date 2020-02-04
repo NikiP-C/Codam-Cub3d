@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 20:56:17 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/04 11:16:05 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,11 @@ void		make_frame(t_data *data)
 			&data->mlx_data->bits_per_pixel, \
 				&data->mlx_data->line_lenght, &data->mlx_data->endian);
 	data = raycasting(data);
+	if (data->safe == 1)
+	{
+		make_bitmap(data);
+		data->safe = 0;
+	}
 	mlx_put_image_to_window(data->mlx_data->mlx, data->mlx_data->mlx_win, \
 		data->mlx_data->mlx_img, 0, 0);
 }

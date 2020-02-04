@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 20:48:50 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/03 15:12:09 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ typedef struct 		s_vs
 	double			y;
 	double			x;
 }					t_vs;
+
+typedef struct		s_movement
+{
+	int				forward;
+	int				backwards;
+	int				right;
+	int				left;
+	int				look_right;
+	int				look_left;
+}					t_movement;
 
 typedef struct 		s_vsi
 {
@@ -139,6 +149,8 @@ typedef struct		s_data
 	t_mlx_data		*mlx_data;
 	t_dda			*dda;
 	t_wall_size		*wall_size;
+	t_movement		*move;
+	int				safe;
 }					t_data;
 
 int				check_map(t_map_data *data);
@@ -172,5 +184,6 @@ void			*ft_calloc(size_t count, size_t size);
 void			project_sprites(t_data *data, int *order);
 t_sprite_data	*sprite_start_end(t_data *data, t_sprite_data *s_data);
 t_sprite_data	*get_info(t_sprite_data *s_data, t_data *data, t_vs sprite);
+void			make_bitmap(t_data *data);
 
 #endif

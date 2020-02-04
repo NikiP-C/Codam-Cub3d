@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 20:56:11 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/03 15:04:21 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	put_line(t_data *data, int x, t_texture *tex, t_vsi *tx_pix)
 	{
 		tx_pix->y = (int)texpos & (tex->height - 1);
 		texpos += step;
-		test = tex->img_addr + (tex->size_line * tx_pix->y \
+		test = tex->img_addr + (tex->size_line * (int)texpos \
 		+ tx_pix->x * (tex->bits_per_pixel / 8));
 		color = *((int *)test);
 		put_pixel(data, x, y, color);

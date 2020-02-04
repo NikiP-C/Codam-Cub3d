@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 16:00:18 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 20:49:31 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/03 15:34:58 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_data	*fill_data(t_data *data)
 	data->textures = textures_data;
 	data->mlx_data = mlx_data;
 	data->dda = dda;
+	data->safe = 0;
 	data->dda->life = 1;
 	data->wall_size = wall_size;
 	data->map_data->amouth_of_sprites = 0;
@@ -76,7 +77,7 @@ t_data	*check_save(char *str, t_data *data)
 {
 	if (!ft_strcmp(str, "--save"))
 	{
-		printf("AAA\n");
+		data->safe = 1;
 	}
 	return (data);
 }
