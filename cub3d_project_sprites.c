@@ -6,69 +6,74 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/31 23:17:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 12:33:40 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/18 16:21:10 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
-void	sprite_pixel(t_data *data, t_sprite_data *s_data, int stripe, int y)
+void	sprite_pixel(t_data *data, t_sprite_data *s_data, \
+				t_vsi *coords, t_texture *sprite)
 {
 	unsigned int	color;
 	char			*test;
 
-	s_data->d = (y) * 256 - data->map_data->dem_y * \
-		128 + s_data->sprite_height * 128;
-	s_data->tex_y = ((s_data->d * data->textures->sprite->height) \
-		/ s_data->sprite_height) / 256;
-	test = data->textures->sprite->img_addr + \
-	(data->textures->sprite->size_line * s_data->tex_y) \
-		+ s_data->tex_x * (data->textures->sprite->bits_per_pixel / 8);
+	(*s_data).d = ((*coords).y) * 256 - (*data).map_data.dem_y * \
+		128 + (*s_data).sprite_height * 128;
+	(*s_data).tex_y = (((*s_data).d * (*sprite).height) \
+		/ (*s_data).sprite_height) / 256;
+	test = (*sprite).img_addr + ((*sprite).size_line * (*s_data).tex_y) \
+		+ (*s_data).tex_x * ((*sprite).bits_per_pixel / 8);
 	color = *((unsigned int *)test);
 	if ((color & 0x00FFFFFF) != 0)
-		put_pixel(data, stripe, y, color);
+		put_pixel(data, (*coords).x, (*coords).y, color);
 }
 
-void	place_pixel(t_sprite_data *s_data, t_data *data, int stripe)
+void	place_pixel(t_sprite_data *s_data, t_data *data, \
+				t_vsi *coords, t_texture *sprite)
 {
-	int				y;
 	double			num;
 
-	while (stripe < s_data->drawend_x)
+	while ((*coords).x < (*s_data).drawend_x)
 	{
-		y = s_data->drawstart_y;
-		while (y < s_data->drawend_y && stripe > 0 && \
-		stripe < data->map_data->dem_x)
+		(*coords).y = (*s_data).drawstart_y;
+		while ((*coords).y < (*s_data).drawend_y && (*coords).x > 0 && \
+		(*coords).x < (*data).map_data.dem_x)
 		{
-			num = ((double)data->textures->sprite->width / \
-			(double)s_data->sprite_width);
-			s_data->tex_x = (stripe - (-s_data->sprite_width / 2 + \
-			s_data->spritescreen_x)) * num;
-			if (s_data->trans_y > 0 && s_data->trans_y < \
-				data->dda->buffer[stripe])
+			num = ((double)((*sprite).width) / (double)(*s_data).sprite_width);
+			(*s_data).tex_x = ((*coords).x - (-(*s_data).sprite_width / 2 + \
+			(*s_data).spritescreen_x)) * num;
+			if ((*s_data).trans_y > 0 && (*s_data).trans_y < \
+					(*data).dda.buffer[(*coords).x])
 			{
-				sprite_pixel(data, s_data, stripe, y);
+				sprite_pixel(data, s_data, coords, sprite);
 			}
-			y++;
+			(*coords).y++;
 		}
-		stripe++;
+		(*coords).x++;
 	}
 }
 
 void	project_sprites(t_data *data, int *order)
 {
-	t_sprite_data	*s_data;
+	t_sprite_data	s_data;
 	int				i;
-	int				stripe;
+	t_vsi			coords;
 
 	i = 0;
-	s_data = malloc(sizeof(t_sprite_data));
-	while (i < data->map_data->amouth_of_sprites)
+	while (i < (*data).map_data.amouth_of_sprites)
 	{
-		s_data = get_info(s_data, data, data->map_data->spr[order[i]]);
-		s_data = sprite_start_end(data, s_data);
-		stripe = s_data->drawstart_x;
-		place_pixel(s_data, data, stripe);
+		get_info(&s_data, data, (*data).map_data.spr[order[i]]);
+		sprite_start_end(data, &s_data);
+		coords.x = s_data.drawstart_x;
+		if ((*data).map_data.spr[order[i]].sprite == '2')
+		{
+			place_pixel(&s_data, data, &coords, &(*data).textures.sprite_1);
+		}
+		else
+		{
+			place_pixel(&s_data, data, &coords, &(*data).textures.sprite_2);
+		}
 		i++;
 	}
 }

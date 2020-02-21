@@ -6,13 +6,13 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:17:20 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 20:42:25 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/19 20:36:45 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
-t_map_data	*get_n_s(t_map_data *data, char c)
+static t_map_data	*get_n_s(t_map_data *data, char c)
 {
 	data->dir_x = 0;
 	if (c == 'N')
@@ -25,7 +25,7 @@ t_map_data	*get_n_s(t_map_data *data, char c)
 	return (data);
 }
 
-t_map_data	*get_pos(int i, int j, t_map_data *data, char c)
+t_map_data			*get_pos(int i, int j, t_map_data *data, char c)
 {
 	data->pos_y = j + 0.5;
 	data->pos_x = i + 0.5;
@@ -37,18 +37,18 @@ t_map_data	*get_pos(int i, int j, t_map_data *data, char c)
 	{
 		data->dir_x = -1;
 		data->plane_x = 0.0;
-		data->plane_y = 0.66;
+		data->plane_y = -0.66;
 	}
 	else if (c == 'E')
 	{
 		data->dir_x = 1;
 		data->plane_x = 0.0;
-		data->plane_y = -0.66;
+		data->plane_y = 0.66;
 	}
 	return (data);
 }
 
-char		*ft_strchr_no_null(const char *s, int c)
+char				*ft_strchr_no_null(const char *s, int c)
 {
 	int		i;
 	char	*str2;
@@ -66,23 +66,24 @@ char		*ft_strchr_no_null(const char *s, int c)
 	return (0);
 }
 
-t_map_data	*find_longest_line(int *longest_line, t_map_data *data, int i)
+static t_map_data	*check_line_length(int *current_line,\
+	t_map_data *data, int i)
 {
-	if (data->x < *longest_line)
-		data->x = *longest_line;
-	*longest_line = 0;
+	if (data->x < *current_line)
+		data->x = *current_line;
+	*current_line = 0;
 	if (data->map[i + 1] != '\n')
 		data->y++;
 	return (data);
 }
 
-int			check_map(t_map_data *data)
+int					check_map(t_map_data *data)
 {
 	int i;
-	int longestline;
+	int current_line;
 
 	i = 0;
-	longestline = 0;
+	current_line = 0;
 	while (data->map[i] != '\0')
 	{
 		if (ft_strchr_no_null("NESW", data->map[i]))
@@ -92,11 +93,11 @@ int			check_map(t_map_data *data)
 			data->pos_x = 1;
 		}
 		else if (data->map[i] == '\n')
-			find_longest_line(&longestline, data, i);
-		else if (data->map[i] < '0' || data->map[i] > '2')
-			return (print_error(3, data->map[i]));
+			check_line_length(&current_line, data, i);
+		else if (data->map[i] < '0' || data->map[i] > '3')
+			exit(print_error(3, data->map[i]));
 		i++;
-		longestline++;
+		current_line++;
 	}
 	if (data->pos_x == 0)
 		exit(print_error(4, 0));

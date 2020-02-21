@@ -5,107 +5,58 @@
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/24 17:30:21 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 19:50:09 by nphilipp      ########   odam.nl         */
+/*   Created: 2020/02/10 11:30:26 by nphilipp       #+#    #+#                */
+/*   Updated: 2020/02/21 16:17:13 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
-t_map_data	*find_sprites(t_map_data *data)
-{
-	int		j;
-	int		i;
-	int		l;
-
-	j = 0;
-	l = 0;
-	data->spr = ft_calloc(data->amouth_of_sprites, sizeof(t_vs));
-	while (data->map2d[j] != NULL)
-	{
-		i = 0;
-		while (data->map2d[j][i] != 0)
-		{
-			if (data->map2d[j][i] == '2')
-			{
-				data->spr[l].x = i + 0.5;
-				data->spr[l].y = j + 0.5;
-				l++;
-			}
-			i++;
-		}
-		j++;
-	}
-	return (data);
-}
-
-char		*make_string(t_map_data *data, int *k, int j)
+char	*make_string(char *map, int x, int *k)
 {
 	char	*str;
 	int		i;
 
 	i = 0;
-	str = ft_calloc(data->x + 1, sizeof(char));
-	while (data->map[*k] != '\n' && data->map[*k] != 0)
+	str = ft_calloc(x + 1, sizeof(char));
+	if (str == NULL)
+		exit(print_error(16, 0));
+	while (map[*k] != '\n' && map[*k] != '\0')
 	{
-		str[i] = data->map[*k];
+		str[i] = map[*k];
 		i++;
 		(*k)++;
-		if (ft_strchr_no_null("NESW", data->map[*k]))
-		{
-			data = get_pos(i, j, data, data->map[*k]);
-			data->map[*k] = '0';
-		}
 	}
-	str[i] = 0;
+	str[i] = '\0';
 	return (str);
 }
 
-t_map_data	*make_map2d(t_map_data *data)
+char	**make_2darray(char *str, int y, int x)
 {
 	int		j;
 	int		k;
+	char	**array;
 
 	j = 0;
 	k = 0;
-	data->map2d = ft_calloc(data->y + 1, sizeof(char *));
-	data->map2d[j] = ft_calloc(data->x + 1, sizeof(char));
-	while (data->map[k] != 0)
+	array = ft_calloc(y + 2, sizeof(char *));
+	if (array == NULL)
+		exit(print_error(16, 0));
+	while (str[k] != 0)
 	{
-		if (data->map[k] != '\n' && data->map[k] != 0)
+		if (str[k] != '\n' && str[k] != 0)
 		{
-			data->map2d[j] = make_string(data, &k, j);
+			array[j] = make_string(str, x, &k);
 			j++;
 		}
-		else if (data->map[k] == '\n')
+		else if (str[k] == '\n')
 			k++;
 	}
-	data->map2d[j] = NULL;
-	data->y = j;
-	check_top_bottom(data);
-	is_map_closed(data);
-	free(data->map);
-	data = find_sprites(data);
-	return (data);
+	array[j] = NULL;
+	return (array);
 }
 
-void		check_line(int j, int i, t_map_data *data)
-{
-	int k;
-
-	k = 0;
-	if (j < 0 || data->map2d[j] == NULL)
-		return ;
-	while (data->map2d[j][k])
-		k++;
-	if (k > (i + 1))
-	{
-		if (data->map2d[j][i] != '1')
-			exit(print_error(7, 0));
-	}
-}
-
-void		is_map_closed(t_map_data *data)
+void	get_start_pos(t_map_data *data)
 {
 	int i;
 	int j;
@@ -114,31 +65,36 @@ void		is_map_closed(t_map_data *data)
 	while (data->map2d[j] != NULL)
 	{
 		i = 0;
-		while (data->map2d[j][i])
+		while (data->map2d[j][i] != '\0')
+		{
+			if (ft_strchr_no_null("NSWE", data->map2d[j][i]))
+			{
+				get_pos(i, j, data, data->map2d[j][i]);
+				data->map2d[j][i] = '0';
+				return ;
+			}
 			i++;
-		check_line(j - 1, i - 1, data);
-		check_line(j + 1, i - 1, data);
+		}
 		j++;
 	}
 }
 
-int			check_top_bottom(t_map_data *data)
+void	map_checking(t_map_data *data)
 {
-	int i;
+	char **back_up_map;
 
-	i = 0;
-	while (data->map2d[0][i])
+	back_up_map = NULL;
+	data->map2d = make_2darray(data->map, data->y, data->x);
+	find_sprites(data);
+	get_start_pos(data);
+	back_up_map = make_2darray(data->map, data->y, data->x);
+	free(data->map);
+	back_up_map[(int)data->pos_y][(int)data->pos_x] = '0';
+	if (!flood_fill(back_up_map, data->pos_x, data->pos_y))
 	{
-		if (data->map2d[0][i] != '1')
-			exit(print_error(6, 0));
-		i++;
+		free_2darray(back_up_map);
+		free_2darray(data->map2d);
+		exit(print_error(7, 0));
 	}
-	i = 0;
-	while (data->map2d[data->y - 1][i])
-	{
-		if (data->map2d[data->y - 1][i] != '1')
-			exit(print_error(5, 0));
-		i++;
-	}
-	return (1);
+	free_2darray(back_up_map);
 }

@@ -6,102 +6,38 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 13:59:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/01 20:42:56 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/21 15:30:21 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
 
-t_texture		*get_path(char b, int fd, t_data *data)
+int			make_string_realloc(int fd, char b, char *str, int malloc_size)
 {
-	char		*str;
-	int			i;
-	t_texture	*texture;
+	int		i;
 
 	i = 0;
-	texture = malloc(sizeof(t_texture));
-	str = malloc(50);
-	read(fd, &b, 1);
+	if (str == NULL)
+		exit(print_error(16, 0));
 	while (b == ' ')
 		read(fd, &b, 1);
-	while (b != '\n' && b != 0 && b != ' ')
+	while (b != '\n' && b != '\0' && b != ' ')
 	{
 		str[i] = b;
 		i++;
+		if (i == malloc_size - 1)
+		{
+			str[i] = 0;
+			malloc_size *= 2;
+			ft_realloc(str, malloc_size);
+		}
 		read(fd, &b, 1);
 	}
 	str[i] = 0;
-	texture->img = mlx_png_file_to_image(data->mlx_data->mlx,\
-	str, &texture->width, &texture->height);
-	texture->img_addr = mlx_get_data_addr(texture->img,\
-	&texture->bits_per_pixel, &texture->size_line, &texture->endian);
-	free(str);
-	return (texture);
+	return (i);
 }
 
-int				get_num(int fd, char *c)
-{
-	int num;
-
-	num = 0;
-	while (*c >= '0' && *c <= '9')
-	{
-		num = num * 10 + (*c - '0');
-		read(fd, c, 1);
-	}
-	return (num);
-}
-
-int				get_color(int fd, char c)
-{
-	int r;
-	int g;
-	int b;
-	int	t;
-
-	r = -1;
-	g = -1;
-	b = -1;
-	t = 0;
-	while (c != '\n')
-	{
-		if (c >= '0' && c <= '9' && r == -1)
-			r = get_num(fd, &c);
-		if (c >= '0' && c <= '9' && g == -1)
-			g = get_num(fd, &c);
-		if (c >= '0' && c <= '9' && b == -1)
-			b = get_num(fd, &c);
-		if (c != '\n')
-			read(fd, &c, 1);
-	}
-	return ((t << 24 | r << 16 | g << 8 | b));
-}
-
-t_textures_data	*get_textures(t_data *data, int fd, char c)
-{
-	char b;
-
-	read(fd, &b, 1);
-	if (c == 'F')
-		data->textures->floor = get_color(fd, b);
-	else if (c == 'C')
-	{
-		data->textures->ceiling = get_color(fd, b);
-	}
-	else if (c == 'S' && b != 'O')
-		data->textures->sprite = get_path(b, fd, data);
-	else if (c == 'N')
-		data->textures->north = get_path(b, fd, data);
-	else if (c == 'S')
-		data->textures->south = get_path(b, fd, data);
-	else if (c == 'E')
-		data->textures->east = get_path(b, fd, data);
-	else if (c == 'W')
-		data->textures->west = get_path(b, fd, data);
-	return (data->textures);
-}
-
-char			*end_string(int *malloc_size, char *str, int i)
+static char	*end_string(int *malloc_size, char *str, int i)
 {
 	str[i] = 0;
 	*malloc_size *= 2;
@@ -109,7 +45,43 @@ char			*end_string(int *malloc_size, char *str, int i)
 	return (str);
 }
 
-t_map_data		*get_map(int fd, t_map_data *map_data, char c)
+static int	check_line(char *str, int *i, int fd, t_map_data *data)
+{
+	char c;
+
+	read(fd, &c, 1);
+	while (c == ' ')
+		read(fd, &c, 1);
+	if (c >= '0' && c <= '3')
+	{
+		(*i)++;
+		str[*i] = c;
+		if (c == '2' || c == '3')
+			data->amouth_of_sprites++;
+		return (0);
+	}
+	while (c == '\n')
+	{
+		if (!read(fd, &c, 1))
+			return (1);
+	}
+	exit(print_error(6, 0));
+}
+
+char		*prepare_str(char c, t_map_data *map_data)
+{
+	char *str;
+
+	str = ft_calloc(100, 1);
+	if (str == NULL)
+		exit(print_error(16, 0));
+	str[0] = c;
+	if (c == '2' || c == '3')
+		map_data->amouth_of_sprites++;
+	return (str);
+}
+
+t_map_data	*get_map(int fd, t_map_data *map_data, char c)
 {
 	char	*str;
 	int		i;
@@ -117,15 +89,16 @@ t_map_data		*get_map(int fd, t_map_data *map_data, char c)
 
 	malloc_size = 100;
 	i = 1;
-	str = ft_calloc(malloc_size, 1);
-	str[0] = c;
-	while (read(fd, &c, 1))
+	str = prepare_str(c, map_data);
+	while (read(fd, &c, 1) > 0)
 	{
 		if (c != ' ')
 		{
 			str[i] = c;
-			if (c == '2')
+			if (c == '2' || c == '3')
 				map_data->amouth_of_sprites++;
+			if (c == '\n')
+				check_line(str, &i, fd, map_data);
 			i++;
 			if (i == (malloc_size - 1))
 				str = end_string(&malloc_size, str, i);
@@ -133,56 +106,5 @@ t_map_data		*get_map(int fd, t_map_data *map_data, char c)
 	}
 	str[i] = '\0';
 	map_data->map = str;
-	i = 0;
 	return (map_data);
-}
-
-int				get_dem(int fd, char c)
-{
-	int num;
-
-	num = 0;
-	read(fd, &c, 1);
-	while (c == ' ')
-		read(fd, &c, 1);
-	if (c >= '0' && c <= '9')
-	{
-		while (c >= '0' && c <= '9')
-		{
-			num = num * 10 + (c - '0');
-			read(fd, &c, 1);
-		}
-		return (num);
-	}
-	else
-		return (0);
-}
-
-t_data			*read_map(t_data *data, char *str)
-{
-	int		fd;
-	char	c;
-
-	fd = open(str, O_RDONLY);
-	if (fd < 0)
-		exit(print_error(8, 0));
-	while (read(fd, &c, 1))
-	{
-		if (c == 'N' || c == 'S' || c == 'E' || c == 'W' ||\
-		c == 'F' || c == 'C')
-			data->textures = get_textures(data, fd, c);
-		if (c == '1')
-		{
-			data->map_data = get_map(fd, data->map_data, c);
-			close(fd);
-			return (data);
-		}
-		if (c == 'R')
-		{
-			data->map_data->dem_x = get_dem(fd, c);
-			data->map_data->dem_y = get_dem(fd, c);
-		}
-	}
-	close(fd);
-	exit(print_error(9, 0));
 }

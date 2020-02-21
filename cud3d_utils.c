@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 14:00:39 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/01/31 14:21:59 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/21 15:17:31 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,13 @@ void	put_pixel(t_data *data, int x, int y, int color)
 {
 	int pos;
 
-	if (x >= 0 && x < data->map_data->dem_x && y >= 0\
-	&& y < data->map_data->dem_y)
+	if (x >= 0 && x < (*data).map_data.dem_x && y >= 0\
+	&& y < (*data).map_data.dem_y)
 	{
-		pos = y * data->mlx_data->line_lenght + x *\
-		(data->mlx_data->bits_per_pixel / 8);
-		*(unsigned int *)(data->mlx_data->mlx_addr + pos) = color;
+		pos = (y * (*data).mlx_data.current_img->line_lenght) + x *\
+		((*data).mlx_data.current_img->bits_per_pixel / 8);
+		*(unsigned int *)((*data).mlx_data.current_img->mlx_addr + pos) = color;
 	}
-}
-
-int		print_error(int error_code, char c)
-{
-	if (error_code == 1)
-		write(1, "ERROR\nFormatting of map is incorrect\n", 38);
-	else if (error_code == 2)
-		write(1, "ERROR\nMore then one starting position found\n", 44);
-	else if (error_code == 3)
-	{
-		write(1, "ERROR\nCharater |", 16);
-		write(1, &c, 1);
-		write(1, "| found, which is not a valid character\n", 40);
-	}
-	else if (error_code == 4)
-		write(1, "ERROR\nNo player position found\n", 31);
-	else if (error_code == 5)
-		write(1, "ERROR\nBottom row doesn't contain only 1's\n", 42);
-	else if (error_code == 6)
-		write(1, "ERROR\nTop row doesn't contain only 1's\n", 39);
-	else if (error_code == 7)
-		write(1, "ERROR\nMap isn't fully inclosed in 1's\n", 38);
-	else if (error_code == 8)
-		write(1, "ERROR\nFile wasn't able to be opened.\n", 37);
-	else if (error_code == 9)
-		write(1, "ERROR\nNo map found.\n", 20);
-	return (0);
 }
 
 char	*ft_realloc(char *str, int malloc_size)
@@ -60,6 +33,8 @@ char	*ft_realloc(char *str, int malloc_size)
 
 	i = 0;
 	newstr = ft_calloc(malloc_size, 1);
+	if (newstr == NULL)
+		exit(print_error(16, 0));
 	while (str[i])
 	{
 		newstr[i] = str[i];
@@ -69,9 +44,62 @@ char	*ft_realloc(char *str, int malloc_size)
 	return (newstr);
 }
 
-double	ft_abs(double num)
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	if (num < 0)
-		num *= -1;
-	return (num);
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+
+	str1 = (unsigned char*)s1;
+	str2 = (unsigned char*)s2;
+	i = 0;
+	while (str1[i] == str2[i])
+	{
+		if (str1[i] == 0 && str2[i] == 0)
+			return (0);
+		i++;
+	}
+	return (str1[i] - str2[i]);
+}
+
+void	free_2darray(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+int		flood_fill(char **map, int x, int y)
+{
+	if (map[y] == NULL)
+		return (0);
+	if (y > 0 && x > 0 && ft_strchr_no_null("023", map[y][x]))
+	{
+		map[y][x] = 'x';
+		if (!flood_fill(map, x, y + 1))
+			return (0);
+		if (!flood_fill(map, x + 1, y))
+			return (0);
+		if (!flood_fill(map, x, y - 1))
+			return (0);
+		if (!flood_fill(map, x - 1, y))
+			return (0);
+		if (!flood_fill(map, x + 1, y + 1))
+			return (0);
+		if (!flood_fill(map, x + 1, y - 1))
+			return (0);
+		if (!flood_fill(map, x - 1, y - 1))
+			return (0);
+		if (!flood_fill(map, x - 1, y + 1))
+			return (0);
+	}
+	if (map[y][x] == '1' || map[y][x] == 'x')
+		return (1);
+	return (0);
 }
