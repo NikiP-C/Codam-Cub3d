@@ -1,15 +1,15 @@
-R 3000 3000
-NO ./pics/pink.png
-WE ./pics/blue.png
-SO ./pics/yellow.png
-EA ./pics/green.png
-F   80, 0, 70  
-C ./pics/star2.png
-S ./pics/unicorn.png
-S2 pics/snake_2.png
+R  555 555
+NO ./pics/pink.png      
+WE ./pics/blue.png      
+SO ./pics/yellow.png    
+EA ./pics/green.png     
+F  80, 0, 70  
+C  ./pics/star2.png
+S  ./pics/uni corn.png
+S2 ./pics/snake_2.png
 
-111111111111100000000000
-100000000000100000000000
+111111111111100000000002
+100000000000100000000002
 100000000000111111111111
 100000001000000010000001
 100000020000300000200001
@@ -17,9 +17,3 @@ S2 pics/snake_2.png
 100002003000200N00030001
 100000000000000000000001
 111111111111111111111111
-232
-32
-323232
-23
-32
-3

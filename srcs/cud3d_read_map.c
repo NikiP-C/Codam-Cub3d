@@ -6,36 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 13:59:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 15:30:21 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/21 23:08:09 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cud3d.h"
-
-int			make_string_realloc(int fd, char b, char *str, int malloc_size)
-{
-	int		i;
-
-	i = 0;
-	if (str == NULL)
-		exit(print_error(16, 0));
-	while (b == ' ')
-		read(fd, &b, 1);
-	while (b != '\n' && b != '\0' && b != ' ')
-	{
-		str[i] = b;
-		i++;
-		if (i == malloc_size - 1)
-		{
-			str[i] = 0;
-			malloc_size *= 2;
-			ft_realloc(str, malloc_size);
-		}
-		read(fd, &b, 1);
-	}
-	str[i] = 0;
-	return (i);
-}
 
 static char	*end_string(int *malloc_size, char *str, int i)
 {

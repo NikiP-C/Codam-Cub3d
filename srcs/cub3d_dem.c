@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:16:55 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/20 12:35:34 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/21 19:10:41 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		get_dem(int fd, char c, t_data *data)
 	if ((*data).map_data.dem_x <= 0)
 		exit(print_error(5, 0));
 	(*data).map_data.dem_y = get_dem_num(fd, c);
-	if ((*data).map_data.dem_x <= 0)
+	if ((*data).map_data.dem_y <= 0)
 		exit(print_error(5, 0));
 	if ((*data).map_data.dem_y > 1440)
 		(*data).map_data.dem_y = 1440;

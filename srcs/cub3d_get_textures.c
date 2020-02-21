@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 15:19:16 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/21 23:08:38 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,6 @@ static int			get_color(int fd, char c)
 	if (r > 255 || g > 255 || b > 255 || b < 0 || g < 0 || r < 0)
 		exit(print_error(10, 0));
 	return ((0 << 24 | r << 16 | g << 8 | b));
-}
-
-static t_texture	get_path(char b, int fd, t_data *data, int *error)
-{
-	char		*str;
-	t_texture	tex;
-	int			i;
-
-	*error = 1;
-	str = ft_calloc(sizeof(char), 20);
-	if (str == NULL)
-		exit(print_error(16, 0));
-	i = make_string_realloc(fd, b, str, 20);
-	ft_bzero(&tex, sizeof(t_texture));
-	if (ft_strcmp(&str[i - 4], ".png"))
-		exit(print_error(11, 0));
-	tex.img = mlx_png_file_to_image((*data).mlx_data.mlx,\
-					str, &tex.width, &tex.height);
-	if (tex.img == NULL)
-		exit(print_error(12, 0));
-	tex.img_addr = mlx_get_data_addr(tex.img, &tex.bits_per_pixel, \
-			&tex.size_line, &tex.endian);
-	free(str);
-	return (tex);
 }
 
 static void			clg_floor(t_data *data, char c, int fd, t_error *err)
