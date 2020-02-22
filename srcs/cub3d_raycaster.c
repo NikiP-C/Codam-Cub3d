@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/20 17:45:40 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 14:17:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,10 @@ void	make_frame(t_data *data)
 		{
 			make_bitmap(data);
 			(*data).safe = 0;
+			mlx_destroy_image((*data).mlx_data.mlx, \
+			(*data).mlx_data.img_1.mlx_img);
+			mlx_destroy_image((*data).mlx_data.mlx, \
+			(*data).mlx_data.img_2.mlx_img);
 			exit(0);
 		}
 	}

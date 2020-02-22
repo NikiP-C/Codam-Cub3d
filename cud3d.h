@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 23:11:09 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 14:26:18 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <math.h>
-# include <stdint.h>
-# include <minilibx/mlx.h>
+# include "minilibx/mlx.h"
 
 typedef struct		s_vsi
 {
@@ -245,6 +243,7 @@ void				get_textures(t_data *data, int fd, char c, t_error *error);
 void				death_screen(t_data *data);
 int					flood_fill(char **map, int x, int y);
 void				find_sprites(t_map_data *data);
+int					free_mlx_exit(int error_code, t_data *data);
 
 /*
 ** libft functions

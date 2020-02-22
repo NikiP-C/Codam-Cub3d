@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/21 23:07:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 23:11:37 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 00:28:02 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_texture	get_path(char b, int fd, t_data *data, int *error)
 {
 	char		*str;
 	t_texture	tex;
-	int			i;
 
 	ft_bzero(&tex, sizeof(t_texture));
 	*error = 1;

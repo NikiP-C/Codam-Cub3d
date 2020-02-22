@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 15:08:34 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 14:06:16 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ void	put_line(t_data *data, int x, t_texture *tex, t_vsi *tx_pix)
 	}
 }
 
+int		free_mlx_exit(int error_code, t_data *data)
+{
+	mlx_destroy_image(data->mlx_data.mlx, data->mlx_data.img_1.mlx_img);
+	mlx_destroy_image(data->mlx_data.mlx, data->mlx_data.img_1.mlx_img);
+	if (data->safe == 0)
+		mlx_destroy_window(data->mlx_data.mlx, data->mlx_data.mlx_win);
+	print_error(error_code, 0);
+	return (0);
+}
+
 t_data	*pick_texture(t_data *data, int x, t_texture *tex)
 {
 	double			wallx;
@@ -67,7 +77,7 @@ t_data	*pick_texture(t_data *data, int x, t_texture *tex)
 
 	tx_pix = ft_calloc(1, sizeof(t_vsi));
 	if (tx_pix == NULL)
-		exit(print_error(16, 0));
+		exit(free_mlx_exit(16, data));
 	if ((*data).dda.side == 0)
 	{
 		wallx = (double)(*data).map_data.pos_y + \

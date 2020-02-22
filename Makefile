@@ -6,11 +6,13 @@
 #    By: nphilipp <nphilipp@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/06 14:01:22 by nphilipp       #+#    #+#                 #
-#    Updated: 2020/02/21 23:44:13 by nphilipp      ########   odam.nl          #
+#    Updated: 2020/02/22 14:25:51 by nphilipp      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
+
+BONUS = cub3d_bonus
 
 SRC =	srcs/cub3d_raycaster.c \
 		srcs/cud3d_read_map.c \
@@ -35,21 +37,26 @@ SRC =	srcs/cub3d_raycaster.c \
 		srcs/cub3d_find_sprites.c \
 		srcs/cub3d_path.c
 
-FLAGS = -O3 
+FLAGS = -O3 -Wall -Werror -Wextra
 
 INC = /minilibx/ -Lminilibx -lmlx
 
 all: $(NAME)
 
 $(NAME):
-	gcc $(FLAGS) $(SRC) -I $(INC) -o cud3d
+	gcc $(FLAGS) $(SRC) -I $(INC) -o $(NAME)
 
-bonus: all
+bonus: $(BONUS)
+
+$(BONUS):
+	gcc $(FLAGS) $(SRC) -I $(INC) -o $(BONUS)
+
 
 clean: fclean
 
 fclean:
-	rm -f cud3d
+	rm -f $(NAME)
+	rm -f $(BONUS)
 
 norm:
 	norminette $(SRC)

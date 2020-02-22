@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/16 18:41:27 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 15:16:51 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 14:12:12 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int				*get_distance(t_data *data, int *order)
 
 	distance = ft_calloc((*data).map_data.amouth_of_sprites, sizeof(double));
 	if (distance == NULL)
-		exit(print_error(16, 0));
+		exit(free_mlx_exit(16, data));
 	i = 0;
 	while (i < (*data).map_data.amouth_of_sprites)
 	{
@@ -109,7 +109,7 @@ t_data			*sprites(t_data *data)
 
 	order = ft_calloc((*data).map_data.amouth_of_sprites, sizeof(int));
 	if (order == NULL)
-		exit(print_error(16, 0));
+		exit(free_mlx_exit(16, data));
 	order = get_distance(data, order);
 	project_sprites(data, order);
 	free(order);
