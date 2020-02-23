@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 11:48:50 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/20 17:54:38 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 19:28:27 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 static void	check_everything(t_error *error)
 {
@@ -66,7 +66,7 @@ t_data		*read_file(t_data *data, char *str)
 	{
 		if (ft_strchr_no_null("NSEWFCR", c))
 			get_textures(data, fd, c, &error_check);
-		if (ft_strchr_no_null("0123", c))
+		if (ft_strchr_no_null("012", c))
 		{
 			check_everything(&error_check);
 			get_map(fd, &data->map_data, c);

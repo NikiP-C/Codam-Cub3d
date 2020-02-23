@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 13:59:02 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 static void	print_error_extra(int error_code)
 {
@@ -30,6 +30,10 @@ static void	print_error_extra(int error_code)
 		write(1, "ERROR\nFailed to initialize MLX image\n", 38);
 	else if (error_code == 16)
 		write(2, "ERROR\nMemory allocation fail\n", 29);
+	else if (error_code == 17)
+		write(2, "ERROR\nSecond argument is not --save\n", 37);
+	else if (error_code == 18)
+		write(2, "ERROR\nArgument count is not 2 or 3\n", 35);
 }
 
 int			print_error(int error_code, char c)

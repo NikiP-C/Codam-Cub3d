@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/10 11:30:26 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 16:17:13 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 char	*make_string(char *map, int x, int *k)
 {

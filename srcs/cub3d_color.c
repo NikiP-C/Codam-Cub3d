@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 14:06:16 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 #include <minilibx/mlx.h>
 #include <unistd.h>
 #include <stdint.h>

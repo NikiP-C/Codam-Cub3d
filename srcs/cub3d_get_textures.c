@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 23:08:38 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 19:32:52 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 static int			get_num(int fd, char *c)
 {
@@ -77,18 +77,12 @@ static void			clg_floor(t_data *data, char c, int fd, t_error *err)
 		exit(error_double(c, 1));
 	if (c == 'F')
 	{
-		if ((new >= '0' && new <= '9') || new == '-')
-			(*data).textures.floor = get_color(fd, new);
-		else
-			(*data).textures.floor_tex = get_path(new, fd, data, &(*err).floor);
+		(*data).textures.floor = get_color(fd, new);
 		(*err).floor = 1;
 	}
 	else
 	{
-		if (new >= '0' && new <= '9' && new == '-')
-			(*data).textures.clg = get_color(fd, new);
-		else
-			(*data).textures.clg_tex = get_path(new, fd, data, &((*err).clg));
+		(*data).textures.clg = get_color(fd, new);
 		(*err).clg = 1;
 	}
 }
@@ -104,17 +98,27 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 		clg_floor(data, c, fd, error);
 	else if (c == 'S' && b != 'O' && b != '2')
 		(*data).textures.sprite_1 = get_path(' ', fd, data, &(*error).sprite1);
-	else if (c == 'S' && b != 'O')
-		(*data).textures.sprite_2 = get_path(' ', fd, data, &(*error).sprite2);
 	else if ((c == 'N' && (*error).north) || (c == 'S' && (*error).south) \
 				|| (c == 'E' && (*error).east) || (c == 'W' && (*error).west))
 		exit(print_error(c, 1));
-	else if (c == 'N')
+	else if (c == 'N' && b == 'O')
+	{
+		printf("North\n");
 		(*data).textures.north = get_path(' ', fd, data, &(*error).north);
-	else if (c == 'S')
+	}
+	else if (c == 'S' && b == 'O')
+	{
+		printf("South\n");
 		(*data).textures.south = get_path(' ', fd, data, &(*error).south);
-	else if (c == 'E')
+	}
+	else if (c == 'E' && b == 'A')
+	{
+		printf("East\n");
 		(*data).textures.east = get_path(' ', fd, data, &(*error).east);
-	else if (c == 'W')
+	}
+	else if (c == 'W' && b == 'E')
+	{
+		printf("West\n");
 		(*data).textures.west = get_path(' ', fd, data, &(*error).west);
+	}
 }

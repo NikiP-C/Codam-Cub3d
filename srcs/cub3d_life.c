@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:38:55 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/20 12:46:17 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 void	put_healthbar(t_data *data)
 {

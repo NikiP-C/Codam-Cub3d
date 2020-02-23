@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/02 17:49:11 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/21 15:03:19 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 static int	check_states(t_keys keys)
 {

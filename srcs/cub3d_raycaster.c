@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 14:17:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 19:52:25 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 #include <math.h>
 
 void	decide_step(t_dda *dda, t_map_data *data)
@@ -104,28 +104,22 @@ void	raycasting(t_data *data)
 		x++;
 	}
 	data = sprites(data);
-	put_healthbar(data);
 }
 
 void	make_frame(t_data *data)
 {
-	if ((*data).dda.life < 0)
-		death_screen(data);
-	else
+	if (!(*data).textures.floor || !(*data).textures.clg)
+		make_floor(&(*data).map_data, data);
+	raycasting(data);
+	if ((*data).safe == 1)
 	{
-		if (!(*data).textures.floor || !(*data).textures.clg)
-			make_floor(&(*data).map_data, data);
-		raycasting(data);
-		if ((*data).safe == 1)
-		{
-			make_bitmap(data);
-			(*data).safe = 0;
-			mlx_destroy_image((*data).mlx_data.mlx, \
-			(*data).mlx_data.img_1.mlx_img);
-			mlx_destroy_image((*data).mlx_data.mlx, \
-			(*data).mlx_data.img_2.mlx_img);
-			exit(0);
-		}
+		make_bitmap(data);
+		(*data).safe = 0;
+		mlx_destroy_image((*data).mlx_data.mlx, \
+		(*data).mlx_data.img_1.mlx_img);
+		mlx_destroy_image((*data).mlx_data.mlx, \
+		(*data).mlx_data.img_2.mlx_img);
+		exit(0);
 	}
 	mlx_put_image_to_window((*data).mlx_data.mlx, (*data).mlx_data.mlx_win, \
 		(*data).mlx_data.current_img->mlx_img, 0, 0);

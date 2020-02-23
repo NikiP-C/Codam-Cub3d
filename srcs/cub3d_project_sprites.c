@@ -6,11 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/31 23:17:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/18 16:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cud3d.h"
+#include "../cub3d.h"
 
 void	sprite_pixel(t_data *data, t_sprite_data *s_data, \
 				t_vsi *coords, t_texture *sprite)
