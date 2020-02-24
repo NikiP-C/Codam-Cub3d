@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d_error.c                                      :+:    :+:            */
+/*   cub3d_error_bonus.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 static void	print_error_extra(int error_code)
 {

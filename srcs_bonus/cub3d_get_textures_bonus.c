@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d_get_textures.c                               :+:    :+:            */
+/*   cub3d_get_textures_bonus.c                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:49:38 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 static int			get_num(int fd, char *c)
 {
@@ -85,10 +85,13 @@ static void			clg_floor(t_data *data, char c, int fd, t_error *err)
 	}
 	else
 	{
-		if (new >= '0' && new <= '9' && new == '-')
-			(*data).textures.clg = get_color(fd, new);
+		if ((new >= '0' && new <= '9') || new == '-')
+		{
+			(*data).textures.clg = get_color(fd, new);}
 		else
+		{
 			(*data).textures.clg_tex = get_path(new, fd, data, &((*err).clg));
+		}
 		(*err).clg = 1;
 	}
 }

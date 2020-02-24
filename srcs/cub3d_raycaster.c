@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 19:52:25 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:16:14 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	calculate_wall(t_data *data, t_wall_size *wall_size)
 {
 	wall_size->lineheight = \
 	(int)((*data).map_data.dem_y / (*data).dda.perpwall_dist);
-	wall_size->drawstart = (*data).dda.jump *\
-	((-wall_size->lineheight / 2) + ((*data).map_data.dem_y / 2));
+	wall_size->drawstart = ((-wall_size->lineheight / 2)\
+	+ ((*data).map_data.dem_y / 2));
 	if (wall_size->drawstart < 0)
 		wall_size->drawstart = 0;
-	wall_size->drawend = (*data).dda.jump * ((wall_size->lineheight / 2) +\
+	wall_size->drawend = ((wall_size->lineheight / 2) +\
 	((*data).map_data.dem_y / 2));
 	if (wall_size->drawend >= (*data).map_data.dem_y)
 		wall_size->drawend = ((*data).map_data.dem_y - 1);
@@ -108,8 +108,6 @@ void	raycasting(t_data *data)
 
 void	make_frame(t_data *data)
 {
-	if (!(*data).textures.floor || !(*data).textures.clg)
-		make_floor(&(*data).map_data, data);
 	raycasting(data);
 	if ((*data).safe == 1)
 	{

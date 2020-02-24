@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d_sprites.c                                    :+:    :+:            */
+/*   cub3d_sprites_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/16 18:41:27 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 t_sprite_data	*sprite_start_end(t_data *data, t_sprite_data *s_data)
 {

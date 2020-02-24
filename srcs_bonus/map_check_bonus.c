@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   map_check.c                                        :+:    :+:            */
+/*   map_check_bonus.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:17:20 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 static t_map_data	*get_n_s(t_map_data *data, char c)
 {

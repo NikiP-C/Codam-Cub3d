@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 19:32:52 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:25:37 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,23 +102,12 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 				|| (c == 'E' && (*error).east) || (c == 'W' && (*error).west))
 		exit(print_error(c, 1));
 	else if (c == 'N' && b == 'O')
-	{
-		printf("North\n");
 		(*data).textures.north = get_path(' ', fd, data, &(*error).north);
-	}
 	else if (c == 'S' && b == 'O')
-	{
-		printf("South\n");
 		(*data).textures.south = get_path(' ', fd, data, &(*error).south);
-	}
 	else if (c == 'E' && b == 'A')
-	{
-		printf("East\n");
 		(*data).textures.east = get_path(' ', fd, data, &(*error).east);
-	}
 	else if (c == 'W' && b == 'E')
-	{
-		printf("West\n");
 		(*data).textures.west = get_path(' ', fd, data, &(*error).west);
-	}
 }
+

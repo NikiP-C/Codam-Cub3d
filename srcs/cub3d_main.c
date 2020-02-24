@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 16:00:18 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:40:41 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:07:49 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	make_img(t_data *data)
 
 void	make_window(t_data *data)
 {
-	(*data).dda.jump = 1.0;
 	if (!(*data).safe)
 	{
 		(*data).mlx_data.mlx_win = mlx_new_window((*data).mlx_data.mlx,\

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d_raycaster.c                                  :+:    :+:            */
+/*   cub3d_raycaster_bonus.c                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 #include <math.h>
 
 void	decide_step(t_dda *dda, t_map_data *data)
@@ -69,11 +69,11 @@ void	calculate_wall(t_data *data, t_wall_size *wall_size)
 {
 	wall_size->lineheight = \
 	(int)((*data).map_data.dem_y / (*data).dda.perpwall_dist);
-	wall_size->drawstart = (*data).dda.jump *\
-	((-wall_size->lineheight / 2) + ((*data).map_data.dem_y / 2));
+	wall_size->drawstart = ((-wall_size->lineheight / 2) + \
+	((*data).map_data.dem_y / 2));
 	if (wall_size->drawstart < 0)
 		wall_size->drawstart = 0;
-	wall_size->drawend = (*data).dda.jump * ((wall_size->lineheight / 2) +\
+	wall_size->drawend = ((wall_size->lineheight / 2) +\
 	((*data).map_data.dem_y / 2));
 	if (wall_size->drawend >= (*data).map_data.dem_y)
 		wall_size->drawend = ((*data).map_data.dem_y - 1);

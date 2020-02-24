@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/23 11:51:15 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	put_line(t_data *data, int x, t_texture *tex, t_vsi *tx_pix)
 	step = (1.0 * tex->height) / (*data).wall_size.lineheight;
 	texpos = ((*data).wall_size.drawstart - ((*data).map_data.dem_y / 2.0)\
 	+ ((*data).wall_size.lineheight / 2.0)) * step - step;
-	if ((*data).textures.floor || (*data).textures.clg)
-		put_floor_clg(data, x);
+	put_floor_clg(data, x);
 	while (y < (*data).wall_size.drawend)
 	{
 		tx_pix->y = (int)texpos & (tex->height - 1);
