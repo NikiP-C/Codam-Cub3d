@@ -5,7 +5,7 @@ SO ./pics/yellow.png
 EA ./pics/green.png 
 F  80, 0, 70
 C  0, 0, 0
-S  ./pics/uni corn.png
+S      ./pics/uni corn.png
 
 000011111111100000000002
 000010000000100000000002
