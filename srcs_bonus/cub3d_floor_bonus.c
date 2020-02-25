@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 19:42:14 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:04:15 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	put_fc_pixels(t_map_data *mdata, t_data *data, \
 		color = *(unsigned int *)str;
 		put_pixel(data, (*dem).x, (*dem).y, color);
 	}
-	if (!(*data).textures.clg)
+	if ((*data).textures.clg == -1)
 	{
 		str = (*data).textures.clg_tex.img_addr + ((*data).textures.\
 		clg_tex.size_line * tex_dem.y + tex_dem.x * \
@@ -53,7 +53,7 @@ void	cast_floor(t_map_data *mdata, t_floor *f_data, t_vsi *dem, t_data *data)
 	{
 		cell.x = (int)(*f_data).floor_x;
 		cell.y = (int)(*f_data).floor_y;
-		if (!(*data).textures.floor)
+		if ((*data).textures.floor == -1)
 		{
 			calculate_tex_start(&tex_dem, cell, \
 					(*data).textures.floor_tex, f_data);

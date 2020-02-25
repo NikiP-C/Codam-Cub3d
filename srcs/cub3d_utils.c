@@ -6,14 +6,14 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 14:00:39 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 19:29:20 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 18:46:02 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../cub3d.h"
 
-void	put_pixel(t_data *data, int x, int y, int color)
+void	put_pixel(t_data *data, int x, int y, unsigned int color)
 {
 	int pos;
 

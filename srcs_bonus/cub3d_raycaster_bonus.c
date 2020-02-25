@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/10 12:09:17 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:04:33 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	make_frame(t_data *data)
 		death_screen(data);
 	else
 	{
-		if (!(*data).textures.floor || !(*data).textures.clg)
+		if ((*data).textures.floor == -1 || (*data).textures.clg == -1)
 			make_floor(&(*data).map_data, data);
 		raycasting(data);
 		if ((*data).safe == 1)

@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 16:02:59 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 20:19:18 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ static int			get_color(int fd, char c)
 	int r;
 	int g;
 	int b;
+	int t;
 
+	t = 0;
 	r = get_num(fd, &c);
 	if (c != ',')
 		exit(print_error(3, c));
@@ -55,7 +57,7 @@ static int			get_color(int fd, char c)
 		exit(print_error(3, c));
 	if (r > 255 || g > 255 || b > 255 || b < 0 || g < 0 || r < 0)
 		exit(print_error(10, 0));
-	return ((0 << 24 | r << 16 | g << 8 | b));
+	return ((t << 24 | r << 16 | g << 8 | b));
 }
 
 static void			clg_floor(t_data *data, char c, int fd, t_error *err)
@@ -89,11 +91,13 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 		get_dem(fd, c, data);
 	if (c == 'F' || c == 'C')
 		clg_floor(data, c, fd, error);
-	else if (c == 'S' && b != 'O' && b != '2')
-		(*data).textures.sprite_1 = get_path(' ', fd, data, &(*error).sprite1);
+	else if (c == 'S' && b != 'O' && error->sprite1)
+		exit(error_double('P', 1));
+	else if (c == 'S' && b != 'O')
+		(*data).textures.sprite_1 = get_path(b, fd, data, &(*error).sprite1);
 	else if ((c == 'N' && (*error).north) || (c == 'S' && (*error).south) \
 				|| (c == 'E' && (*error).east) || (c == 'W' && (*error).west))
-		exit(print_error(c, 1));
+		exit(error_double(c, 1));
 	else if (c == 'N' && b == 'O')
 		(*data).textures.north = get_path(' ', fd, data, &(*error).north);
 	else if (c == 'S' && b == 'O')

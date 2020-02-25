@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 15:43:17 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 20:08:11 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int			error_double(char c, int error_code)
 		write(2, "ERROR\nEast texture is defined multiple times\n", 45);
 	if (error_code == 1 && c == 'N')
 		write(2, "ERROR\nWest texture is defined multiple times\n", 45);
+	if (error_code == 1 && c == 'P')
+		write(2, "ERROR\nSprite texture is defined multiple times\n", 47);
 	return (1);
 }
 
@@ -96,5 +98,7 @@ int			error_missing(int error_code)
 		write(2, "ERROR\nMissing east texture\n", 27);
 	else if (error_code == 'W')
 		write(2, "ERROR\nMissing west texture\n", 27);
+	else if (error_code == 'P')
+		write(2, "ERROR\nMissing sprite texture\n", 29);
 	return (1);
 }

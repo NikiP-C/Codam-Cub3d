@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 11:51:15 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 20:19:54 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	put_floor_clg(t_data *data, int x)
 	int y;
 
 	y = 0;
-	while (y <= (*data).wall_size.drawstart && (*data).textures.clg)
+	while (y <= (*data).wall_size.drawstart)
 	{
 		put_pixel(data, x, y, (*data).textures.clg);
 		y++;
 	}
 	y = (*data).wall_size.drawend;
-	while (y <= (*data).map_data.dem_y && (*data).textures.floor)
+	while (y <= (*data).map_data.dem_y)
 	{
 		put_pixel(data, x, y, (*data).textures.floor);
 		y++;

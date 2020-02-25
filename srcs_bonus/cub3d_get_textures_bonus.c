@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 15:57:51 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 20:14:09 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,16 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 		get_dem(fd, c, data);
 	if (c == 'F' || c == 'C')
 		clg_floor(data, c, fd, error);
+	else if (c == 'S' && b != 'O' && ((b != '2' && \
+	error->sprite1) || (b == '2' && error->sprite2)))
+		exit(error_double('P', 1));
 	else if (c == 'S' && b != 'O' && b != '2')
 		(*data).textures.sprite_1 = get_path(' ', fd, data, &(*error).sprite1);
 	else if (c == 'S' && b != 'O')
 		(*data).textures.sprite_2 = get_path(' ', fd, data, &(*error).sprite2);
 	else if ((c == 'N' && (*error).north) || (c == 'S' && (*error).south) \
 				|| (c == 'E' && (*error).east) || (c == 'W' && (*error).west))
-		exit(print_error(c, 1));
+		exit(error_double(c, 1));
 	else if (c == 'N' && b == 'O')
 		(*data).textures.north = get_path(' ', fd, data, &(*error).north);
 	else if (c == 'S' && b == 'O')

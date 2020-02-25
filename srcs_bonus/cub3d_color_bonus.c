@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 12:46:35 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:24:07 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	put_floor_clg(t_data *data, int x)
 	int y;
 
 	y = 0;
-	while (y <= (*data).wall_size.drawstart && (*data).textures.clg)
+	while (y <= (*data).wall_size.drawstart && (*data).textures.clg != -1)
 	{
 		put_pixel(data, x, y, (*data).textures.clg);
 		y++;
 	}
 	y = (*data).wall_size.drawend;
-	while (y <= (*data).map_data.dem_y && (*data).textures.floor)
+	while (y <= (*data).map_data.dem_y && (*data).textures.floor != -1)
 	{
 		put_pixel(data, x, y, (*data).textures.floor);
 		y++;
@@ -46,7 +46,7 @@ void	put_line(t_data *data, int x, t_texture *tex, t_vsi *tx_pix)
 	step = (1.0 * tex->height) / (*data).wall_size.lineheight;
 	texpos = ((*data).wall_size.drawstart - ((*data).map_data.dem_y / 2.0)\
 	+ ((*data).wall_size.lineheight / 2.0)) * step - step;
-	if ((*data).textures.floor || (*data).textures.clg)
+	if ((*data).textures.floor != -1 || (*data).textures.clg != -1)
 		put_floor_clg(data, x);
 	while (y < (*data).wall_size.drawend)
 	{

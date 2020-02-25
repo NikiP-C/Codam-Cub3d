@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: nphilipp <nphilipp@student_bonus.codam.nl>         +#+                      #
+#    By: nphilipp <nphilipp@student_bonus.codam.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/06 14:01:22 by nphilipp       #+#    #+#                 #
-#    Updated: 2020/02/23 11:29:21 by nphilipp      ########   odam.nl          #
+#    Updated: 2020/02/25 17:01:18 by nphilipp      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ FLAGS = -O3 -Wall -Werror -Wextra
 
 INC = /minilibx/ -Lminilibx -lmlx
 
-all: $(NAME) 
+all: $(NAME)
 
 $(NAME): libmx
 	gcc $(FLAGS) $(SRC) -I $(INC) -o $(NAME)
@@ -77,7 +77,7 @@ libmx:
 	make -C minilibx
 	mv minilibx/libmlx.dylib .
 
-clean: 
+clean:
 	make -C minilibx clean
 	rm libmlx.dylib
 

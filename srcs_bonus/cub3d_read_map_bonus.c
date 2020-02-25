@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 13:59:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:48:59 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@ static char	*end_string(int *malloc_size, char *str, int i)
 
 static int	check_line(char *str, int *i, int fd, t_map_data *data)
 {
-	char c;
+	char	c;
+	int		ret;
 
+	ret = 1;
 	read(fd, &c, 1);
-	while (c == ' ')
-		read(fd, &c, 1);
+	while (c == ' ' && ret == 1)
+	{
+		ret = read(fd, &c, 1);
+	}
 	if (c >= '0' && c <= '3')
 	{
 		(*i)++;
@@ -65,7 +69,7 @@ t_map_data	*get_map(int fd, t_map_data *map_data, char c)
 	malloc_size = 100;
 	i = 1;
 	str = prepare_str(c, map_data);
-	while (read(fd, &c, 1) > 0)
+	while (read(fd, &c, 1))
 	{
 		if (c != ' ')
 		{

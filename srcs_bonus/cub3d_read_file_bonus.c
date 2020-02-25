@@ -6,13 +6,13 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 11:48:50 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:59:37 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-static void	check_everything(t_error *error)
+static void		check_everything(t_error *error)
 {
 	if ((*error).clg == 0)
 		exit(error_missing('C'));
@@ -26,9 +26,11 @@ static void	check_everything(t_error *error)
 		exit(error_missing('E'));
 	if ((*error).north == 0)
 		exit(error_missing('N'));
+	if (!(*error).sprite1 || !(*error).sprite2)
+		exit(error_missing('P'));
 }
 
-static int	open_file(char *str)
+static int		open_file(char *str)
 {
 	int fd;
 	int i;
@@ -50,7 +52,15 @@ static int	open_file(char *str)
 	return (fd);
 }
 
-t_data		*read_file(t_data *data, char *str)
+static t_data	*map_found(t_error *error, t_data *data, char c, int fd)
+{
+	check_everything(error);
+	get_map(fd, &data->map_data, c);
+	close(fd);
+	return (data);
+}
+
+t_data			*read_file(t_data *data, char *str)
 {
 	int		fd;
 	char	c;
@@ -59,6 +69,8 @@ t_data		*read_file(t_data *data, char *str)
 
 	i = 0;
 	fd = open_file(str);
+	data->textures.floor = -1;
+	data->textures.clg = -1;
 	ft_bzero(&error_check, sizeof(t_error));
 	if (fd < 0)
 		exit(print_error(8, 0));
@@ -66,13 +78,10 @@ t_data		*read_file(t_data *data, char *str)
 	{
 		if (ft_strchr_no_null("NSEWFCR", c))
 			get_textures(data, fd, c, &error_check);
-		if (ft_strchr_no_null("0123", c))
-		{
-			check_everything(&error_check);
-			get_map(fd, &data->map_data, c);
-			close(fd);
-			return (data);
-		}
+		else if (ft_strchr_no_null("0123", c))
+			return (map_found(&error_check, data, c, fd));
+		else if (c != '\n' && c != ' ')
+			exit(print_error(3, c));
 	}
 	close(fd);
 	exit(print_error(9, 0));

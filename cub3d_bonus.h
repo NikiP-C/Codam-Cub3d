@@ -6,12 +6,12 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 15:57:11 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:49:59 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <fcntl.h>
 # include <unistd.h>
@@ -143,8 +143,8 @@ typedef struct		s_textures_data
 	t_texture		sprite_2;
 	t_texture		floor_tex;
 	t_texture		clg_tex;
-	int				floor;
-	int				clg;
+	long			floor;
+	long			clg;
 }					t_textures_data;
 
 typedef struct		s_wall_size

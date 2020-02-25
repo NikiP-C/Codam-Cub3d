@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 15:55:07 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 19:18:29 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int					check_map(t_map_data *data);
 void				make_frame(t_data *data);
 t_data				*read_file(t_data *data, char *str);
 t_data				*pick_color(t_data *data, int x);
-void				put_pixel(t_data *data, int x, int y, int color);
+void				put_pixel(t_data *data, int x, int y, unsigned int color);
 t_data				*pick_texture(t_data *data, int x, t_texture *tex);
 t_data				*choose_side(t_data *data, int x);
 t_data				*sprites(t_data *data);
