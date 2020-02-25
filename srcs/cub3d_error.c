@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/24 21:49:27 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			error_double(char c, int error_code)
 int			error_missing(int error_code)
 {
 	if (error_code == 'C')
-		write(2, "ERROR\nMissing clg texture/color\n", 36);
+		write(2, "ERROR\nMissing clg texture/color\n", 32);
 	else if (error_code == 'F')
 		write(2, "ERROR\nMissing floor texture/color\n", 34);
 	else if (error_code == 'N')

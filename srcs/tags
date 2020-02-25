@@ -1,0 +1,82 @@
+Mcub3d_main	cub3d_main.c	/^int		main(int ac, char **av)$/
+calculate_wall	cub3d_raycaster.c	/^void	calculate_wall(t_data *data, t_wall_size *wal/
+check_everything	cub3d_read_file.c	/^static void	check_everything(t_error *error)$/
+check_line	cub3d_read_map.c	/^static int	check_line(char *str, int *i, int fd, t/
+check_line_length	map_check.c	/^static t_map_data	*check_line_length(int *current_/
+check_map	map_check.c	/^int					check_map(t_map_data *data)$/
+check_states	cub3d_smooth_movement.c	/^static int	check_states(t_keys keys)$/
+choose_side	cub3d_color.c	/^t_data	*choose_side(t_data *data, int x)$/
+clg_floor	cub3d_get_textures.c	/^static void			clg_floor(t_data *data, char c, int /
+death_screen	cub3d_life.c	/^void	death_screen(t_data *data)$/
+decide_step	cub3d_raycaster.c	/^void	decide_step(t_dda *dda, t_map_data *data)$/
+end_session	cub3d_keypress.c	/^int		end_session(t_data *data)$/
+end_string	cub3d_read_map.c	/^static char	*end_string(int *malloc_size, char *st/
+error_double	cub3d_error.c	/^int			error_double(char c, int error_code)$/
+error_missing	cub3d_error.c	/^int			error_missing(int error_code)$/
+fill_sprite_data	cub3d_find_sprites.c	/^static void	fill_sprite_data(t_vs *spr, char c, in/
+fill_zero	cub3d_bitmap.c	/^char	*fill_zero(char *str, int start, int end)$/
+find_collison	cub3d_raycaster.c	/^void	find_collison(t_dda *dda, t_data *data)$/
+find_sprites	cub3d_find_sprites.c	/^void		find_sprites(t_map_data *data)$/
+flood_fill	cub3d_utils.c	/^int		flood_fill(char **map, int x, int y)$/
+free_2darray	cub3d_utils.c	/^void	free_2darray(char **str)$/
+free_mlx_exit	cub3d_color.c	/^int		free_mlx_exit(int error_code, t_data *data)$/
+ft_bzero	ft_calloc.c	/^void	ft_bzero(void *s, size_t n)$/
+ft_calloc	ft_calloc.c	/^void	*ft_calloc(size_t count, size_t size)$/
+ft_realloc	cub3d_utils.c	/^char	*ft_realloc(char *str, int malloc_size)$/
+ft_strchr_no_null	map_check.c	/^char				*ft_strchr_no_null(const char *s, int c)$/
+ft_strcmp	cub3d_utils.c	/^int		ft_strcmp(const char *s1, const char *s2)$/
+ft_strlen	ft_put2dstr.c	/^int		ft_strlen(char *str)$/
+get_color	cub3d_get_textures.c	/^static int			get_color(int fd, char c)$/
+get_dem	cub3d_dem.c	/^void		get_dem(int fd, char c, t_data *data)$/
+get_dem_num	cub3d_dem.c	/^static int	get_dem_num(int fd, char c)$/
+get_distance	cub3d_sprites.c	/^int				*get_distance(t_data *data, int *order)$/
+get_info	cub3d_sprites.c	/^t_sprite_data	*get_info(t_sprite_data *s_data, t_d/
+get_map	cub3d_read_map.c	/^t_map_data	*get_map(int fd, t_map_data *map_data, /
+get_n_s	map_check.c	/^static t_map_data	*get_n_s(t_map_data *data, char /
+get_num	cub3d_get_textures.c	/^static int			get_num(int fd, char *c)$/
+get_order	cub3d_sprites.c	/^int				*get_order(t_data *data, int *order, double/
+get_path	cub3d_path.c	/^t_texture	get_path(char b, int fd, t_data *data, i/
+get_pos	map_check.c	/^t_map_data			*get_pos(int i, int j, t_map_data *da/
+get_start_pos	cub3d_2darray.c	/^void	get_start_pos(t_map_data *data)$/
+get_textures	cub3d_get_textures.c	/^void				get_textures(t_data *data, int fd, char c,/
+key_press	cub3d_keypress.c	/^int		key_press(int keycode, void *param)$/
+key_release	cub3d_keypress.c	/^int		key_release(int keycode, void *param)$/
+make_2darray	cub3d_2darray.c	/^char	**make_2darray(char *str, int y, int x)$/
+make_bitmap	cub3d_bitmap.c	/^void	make_bitmap(t_data *data)$/
+make_frame	cub3d_raycaster.c	/^void	make_frame(t_data *data)$/
+make_image	cub3d_bitmap.c	/^void	make_image(t_data *data, int fd)$/
+make_img	cub3d_main.c	/^void	make_img(t_data *data)$/
+make_infoheader	cub3d_bitmap.c	/^char	*make_infoheader(t_data *data, char *str)$/
+make_string	cub3d_2darray.c	/^char	*make_string(char *map, int x, int *k)$/
+make_string_realloc	cub3d_path.c	/^static char	*make_string_realloc(int fd, char b, c/
+make_window	cub3d_main.c	/^void	make_window(t_data *data)$/
+map_checking	cub3d_2darray.c	/^void	map_checking(t_map_data *data)$/
+move_backwards	cub3d_movement.c	/^t_data		*move_backwards(t_data *data)$/
+move_forward	cub3d_movement.c	/^t_data		*move_forward(t_data *data)$/
+move_left	cub3d_movement.c	/^t_data		*move_left(t_data *data)$/
+move_right	cub3d_movement.c	/^t_data		*move_right(t_data *data)$/
+movement	cub3d_smooth_movement.c	/^int			movement(void *param)$/
+open_file	cub3d_read_file.c	/^static int	open_file(char *str)$/
+pick_texture	cub3d_color.c	/^t_data	*pick_texture(t_data *data, int x, t_textur/
+place_pixel	cub3d_project_sprites.c	/^void	place_pixel(t_sprite_data *s_data, t_data *da/
+prepare_str	cub3d_read_map.c	/^char		*prepare_str(char c, t_map_data *map_data)$/
+print_error	cub3d_error.c	/^int			print_error(int error_code, char c)$/
+print_error_extra	cub3d_error.c	/^static void	print_error_extra(int error_code)$/
+project_sprites	cub3d_project_sprites.c	/^void	project_sprites(t_data *data, int *order)$/
+put_floor_clg	cub3d_color.c	/^void	put_floor_clg(t_data *data, int x)$/
+put_healthbar	cub3d_life.c	/^void	put_healthbar(t_data *data)$/
+put_line	cub3d_color.c	/^void	put_line(t_data *data, int x, t_texture *tex,/
+put_pixel	cub3d_utils.c	/^void	put_pixel(t_data *data, int x, int y, int col/
+raycasting	cub3d_raycaster.c	/^void	raycasting(t_data *data)$/
+read_file	cub3d_read_file.c	/^t_data		*read_file(t_data *data, char *str)$/
+remove_spaces	cub3d_path.c	/^static char	*remove_spaces(int i, char *str)$/
+sprite_pixel	cub3d_project_sprites.c	/^void	sprite_pixel(t_data *data, t_sprite_data *s_d/
+sprite_start_end	cub3d_sprites.c	/^t_sprite_data	*sprite_start_end(t_data *data, t_sp/
+sprites	cub3d_sprites.c	/^t_data			*sprites(t_data *data)$/
+switch_image	cub3d_smooth_movement.c	/^static void	switch_image(t_data *data, int count)$/
+t_t2d	notes.txt	/^}					t_t2d;$/
+t_t2i	notes.txt	/^}					t_t2i;$/
+turn_left	cub3d_keypress.c	/^t_data	*turn_left(t_data *data)$/
+turn_right	cub3d_keypress.c	/^t_data	*turn_right(t_data *data)$/
+twod_array_printer	ft_put2dstr.c	/^void	twod_array_printer(char **array)$/
+zero_pad	cub3d_bitmap.c	/^void	zero_pad(int x, int fd)$/

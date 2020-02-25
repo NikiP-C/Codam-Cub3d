@@ -6,64 +6,11 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:25:37 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:37:49 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-static int			get_num(int fd, char *c)
-{
-	int num;
-	int neg;
-
-	num = 0;
-	neg = 1;
-	if (*c == '-')
-	{
-		neg = -1;
-		read(fd, c, 1);
-	}
-	while (*c >= '0' && *c <= '9')
-	{
-		num = num * 10 + (*c - '0');
-		read(fd, c, 1);
-	}
-	while (*c == ' ')
-		read(fd, c, 1);
-	if (*c == ',')
-		read(fd, c, 1);
-	else if (*c != '\n')
-		exit(print_error(13, 0));
-	return (num * neg);
-}
-
-static int			get_color(int fd, char c)
-{
-	int r;
-	int g;
-	int b;
-
-	r = -1;
-	g = -1;
-	b = -1;
-	while (c != '\n')
-	{
-		if (((c >= '0' && c <= '9') || c == '-') && r == -1)
-			r = get_num(fd, &c);
-		else if (((c >= '0' && c <= '9') || c == '-') && g == -1)
-			g = get_num(fd, &c);
-		else if (((c >= '0' && c <= '9') || c == '-') && b == -1)
-			b = get_num(fd, &c);
-		else if (c != ' ')
-			exit(print_error(3, c));
-		else
-			read(fd, &c, 1);
-	}
-	if (r > 255 || g > 255 || b > 255 || b < 0 || g < 0 || r < 0)
-		exit(print_error(10, 0));
-	return ((0 << 24 | r << 16 | g << 8 | b));
-}
 
 static void			clg_floor(t_data *data, char c, int fd, t_error *err)
 {

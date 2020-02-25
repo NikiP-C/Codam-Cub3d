@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/23 17:42:33 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/24 18:18:42 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	make_bitmap(t_data *data)
 		exit(free_mlx_exit(16, data));
 	pad = (4 - ((*data).map_data.dem_x * 3) % 4) * (*data).map_data.dem_y;
 	size = (*data).map_data.dem_x * (*data).map_data.dem_y * 3 + 54 + pad;
-	fd = open("img.bmp", O_WRONLY | O_CREAT, 0644);
+	fd = open("img.bmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	fileheader[0] = 'B';
 	fileheader[1] = 'M';
 	*((unsigned int *)(fileheader + 2)) = size;
