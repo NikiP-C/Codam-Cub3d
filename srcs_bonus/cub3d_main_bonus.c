@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 16:00:18 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:48:48 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ int		main(int ac, char **av)
 		return (0);
 	map_checking(&data.map_data);
 	make_window(&data);
+	return (0);
 }

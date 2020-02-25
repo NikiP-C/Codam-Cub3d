@@ -1,4 +1,0 @@
-1: Check for only 2 commas in floor/ceiling color parsing.
-2: With 3 resolutions, odd error message appears, related to err3
-3: Map can come on same line as resolution
-4: Segfault with 3 in map without bonus

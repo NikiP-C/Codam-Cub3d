@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:43:17 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			error_double(char c, int error_code)
 		write(2, "ERROR\nFloor texture/color is defined multiple times\n", 52);
 	if (error_code == 1 && c == 'C')
 		write(2, \
-		"ERROR\nceiling texture/color is defined multiple times\n", 54);
+		"ERROR\nCeiling texture/color is defined multiple times\n", 54);
 	if (error_code == 1 && c == 'N')
 		write(2, "ERROR\nNorth texture is \
 		defined multiple times\n", 46);
@@ -85,7 +85,7 @@ int			error_double(char c, int error_code)
 int			error_missing(int error_code)
 {
 	if (error_code == 'C')
-		write(2, "ERROR\nMissing clg texture/color\n", 36);
+		write(2, "ERROR\nMissing clg texture/color\n", 32);
 	else if (error_code == 'F')
 		write(2, "ERROR\nMissing floor texture/color\n", 34);
 	else if (error_code == 'N')

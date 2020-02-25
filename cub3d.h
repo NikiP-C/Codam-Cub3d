@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:08:35 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:55:07 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,19 +207,12 @@ t_data				*choose_side(t_data *data, int x);
 t_data				*sprites(t_data *data);
 int					print_error(int error_code, char c);
 int					key_press(int keycode, void *param);
-t_data				*move_forward(t_data *data);
-t_data				*move_backwards(t_data *data);
-t_data				*turn_left(t_data *data);
-t_data				*turn_right(t_data *data);
 void				make_map2d(t_map_data *data);
 void				put_healthbar(t_data *data);
 t_map_data			*sprite_data(t_map_data *data, int j, int i);
 t_data				*sprites(t_data *data);
-t_data				*move_left(t_data *data);
-t_data				*move_right(t_data *data);
 void				twod_array_printer(char **array);
 int					check_top_bottom(t_map_data *data);
-int					end_session(t_data *data);
 char				*ft_strchr_no_null(const char *s, int c);
 t_map_data			*get_pos(int i, int j, t_map_data *data, char c);
 void				is_map_closed(t_map_data *data);
@@ -227,9 +220,6 @@ void				project_sprites(t_data *data, int *order);
 t_sprite_data		*sprite_start_end(t_data *data, t_sprite_data *s_data);
 t_sprite_data		*get_info(t_sprite_data *s_data, t_data *data, t_vs sprite);
 void				make_bitmap(t_data *data);
-int					movement(void *param);
-int					key_release(int keycode, void *param);
-int					end_session(t_data *data);
 void				map_checking(t_map_data *data);
 void				make_floor(t_map_data *mdata, t_data *data);
 int					ft_strcmp(const char *s1, const char *s2);
@@ -244,6 +234,21 @@ void				death_screen(t_data *data);
 int					flood_fill(char **map, int x, int y);
 void				find_sprites(t_map_data *data);
 int					free_mlx_exit(int error_code, t_data *data);
+
+/*
+** Keypress functions
+*/
+
+void				move_forward(t_data *data);
+void				move_backwards(t_data *data);
+void				turn_left(t_data *data);
+void				turn_right(t_data *data);
+void				move_left(t_data *data);
+void				move_right(t_data *data);
+int					key_press(int keycode, void *param);
+int					movement(void *param);
+int					key_release(int keycode, void *param);
+int					end_session(t_data *data);
 
 /*
 ** libft functions

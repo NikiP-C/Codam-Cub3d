@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/02 17:49:11 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:50:09 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ int			movement(void *param)
 	if (check_states(((t_data *)(param))->keys))
 	{
 		if (((t_data *)(param))->keys.walk_backwards)
-			param = move_backwards(param);
+			move_backwards(param);
 		if (((t_data *)(param))->keys.walk_forward)
-			param = move_forward(param);
+			move_forward(param);
 		if (((t_data *)(param))->keys.walk_left)
-			param = move_left(param);
+			move_left(param);
 		if (((t_data *)(param))->keys.walk_right)
-			param = move_right(param);
+			move_right(param);
 		if (((t_data *)(param))->keys.look_left)
-			param = turn_left(param);
+			turn_left(param);
 		if (((t_data *)(param))->keys.look_right)
-			param = turn_right(param);
+			turn_right(param);
 		switch_image(param, count);
 		count++;
 		make_frame(param);

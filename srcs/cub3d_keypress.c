@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/18 15:18:47 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 19:55:39 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:50:33 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		key_release(int keycode, void *param)
 	return (1);
 }
 
-t_data	*turn_left(t_data *data)
+void	turn_left(t_data *data)
 {
 	double old_dirx;
 	double old_planex;
@@ -83,10 +83,9 @@ t_data	*turn_left(t_data *data)
 	(*data).map_data.plane_y * sin(-0.02);
 	(*data).map_data.plane_y = old_planex * sin(-0.02) + \
 	(*data).map_data.plane_y * cos(-0.02);
-	return (data);
 }
 
-t_data	*turn_right(t_data *data)
+void	turn_right(t_data *data)
 {
 	double old_dirx;
 	double old_planex;
@@ -101,5 +100,4 @@ t_data	*turn_right(t_data *data)
 	(*data).map_data.plane_y * sin(0.02);
 	(*data).map_data.plane_y = old_planex * sin(0.02) + \
 	(*data).map_data.plane_y * cos(0.02);
-	return (data);
 }

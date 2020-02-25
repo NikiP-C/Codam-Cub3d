@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/23 17:42:33 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/24 18:18:42 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:49:15 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	make_image(t_data *data, int fd)
 			test = (*data).mlx_data.current_img->mlx_addr + \
 			((*data).mlx_data.current_img->line_lenght \
 				* y + (x * ((*data).mlx_data.current_img->bits_per_pixel / 8)));
-			color = *((int *)test);
+			color = *((unsigned int *)test);
 			write(fd, &color, 3);
 			x++;
 		}
@@ -88,11 +88,13 @@ void	make_bitmap(t_data *data)
 	char			*infoheader;
 	int				pad;
 
+	pad = 0;
 	fileheader = ft_calloc(14, sizeof(char));
 	infoheader = ft_calloc(40, sizeof(char));
 	if (fileheader == NULL || infoheader == NULL)
 		exit(free_mlx_exit(16, data));
-	pad = (4 - ((*data).map_data.dem_x * 3) % 4) * (*data).map_data.dem_y;
+	if ((data->map_data.dem_x * 3) % 4)
+		pad = (4 - ((*data).map_data.dem_x * 3) % 4) * (*data).map_data.dem_y;
 	size = (*data).map_data.dem_x * (*data).map_data.dem_y * 3 + 54 + pad;
 	fd = open("img.bmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	fileheader[0] = 'B';

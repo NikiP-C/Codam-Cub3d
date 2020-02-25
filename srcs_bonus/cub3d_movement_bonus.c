@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/18 15:19:18 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:21:10 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 15:51:26 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	life_up(t_data *data, char c)
 	return (1);
 }
 
-t_data		*move_forward(t_data *data)
+void		move_forward(t_data *data)
 {
 	if (data->map_data.map2d[(int)(data->map_data.pos_y)]\
 	[(int)(data->map_data.pos_x + data->map_data.dir_x * 0.06)] == '0')
@@ -45,10 +45,9 @@ t_data		*move_forward(t_data *data)
 		life_up(data, data->map_data.map2d[(int)(data->map_data.pos_y\
 		+ data->map_data.dir_y * 0.06)][(int)data->map_data.pos_x]);
 	}
-	return (data);
 }
 
-t_data		*move_backwards(t_data *data)
+void		move_backwards(t_data *data)
 {
 	if (data->map_data.map2d[(int)(data->map_data.pos_y)]\
 	[(int)(data->map_data.pos_x - data->map_data.dir_x * 0.06)] == '0')
@@ -67,10 +66,9 @@ t_data		*move_backwards(t_data *data)
 		life_up(data, data->map_data.map2d[(int)(data->map_data.pos_y\
 		- data->map_data.dir_y * 0.06)][(int)data->map_data.pos_x]);
 	}
-	return (data);
 }
 
-t_data		*move_left(t_data *data)
+void		move_left(t_data *data)
 {
 	if (data->map_data.map2d[(int)(data->map_data.pos_y)][(int)\
 	(data->map_data.pos_x + (data->map_data.dir_y * -1) * 0.06)] == '0')
@@ -88,10 +86,9 @@ t_data		*move_left(t_data *data)
 		life_up(data, data->map_data.map2d[(int)(data->map_data.pos_y \
 		+ (data->map_data.dir_x) * 0.06)][(int)data->map_data.pos_x]);
 	}
-	return (data);
 }
 
-t_data		*move_right(t_data *data)
+void		move_right(t_data *data)
 {
 	if (data->map_data.map2d[(int)(data->map_data.pos_y)][(int)\
 	(data->map_data.pos_x + (data->map_data.dir_y) * 0.06)] == '0')
@@ -110,5 +107,4 @@ t_data		*move_right(t_data *data)
 		life_up(data, data->map_data.map2d[(int)(data->map_data.pos_y +\
 		(data->map_data.dir_x * -1) * 0.06)][(int)data->map_data.pos_y]);
 	}
-	return (data);
 }
