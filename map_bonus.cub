@@ -1,9 +1,9 @@
-R  550 1234 123
+R  550 1234
 NO ./pics/pink.png
 WE ./pics/blue.png      
 SO ./pics/yellow.png    
 EA ./pics/green.png     
-F  80, 0, 70,
+F  80, 0, 70
 C  ./pics/star2.png
 S  ./pics/uni corn.png
 S2 ./pics/snake_2.png

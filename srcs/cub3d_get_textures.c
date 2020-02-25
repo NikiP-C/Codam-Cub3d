@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 15:58:34 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/25 16:02:59 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,3 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 	else if (c == 'W' && b == 'E')
 		(*data).textures.west = get_path(' ', fd, data, &(*error).west);
 }
-
