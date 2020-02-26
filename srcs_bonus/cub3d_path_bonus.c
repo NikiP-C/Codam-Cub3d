@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/21 23:07:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/23 15:53:35 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/26 15:52:23 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_texture	get_path(char b, int fd, t_data *data, int *error)
 	char		*str;
 	t_texture	tex;
 
+	if (*error == 1)
+		exit(print_error(19, 0));
 	ft_bzero(&tex, sizeof(t_texture));
 	*error = 1;
 	str = ft_calloc(sizeof(char), 20);

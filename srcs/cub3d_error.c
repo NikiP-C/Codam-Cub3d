@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 20:22:08 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/26 16:01:14 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	print_error_extra(int error_code)
 		write(2, "ERROR\nSecond argument is not --save\n", 37);
 	else if (error_code == 18)
 		write(2, "ERROR\nArgument count is not 2 or 3\n", 35);
+	else if (error_code == 19)
+		write(2, "ERROR\nOne of your elements is declared twice\n", 45);
 }
 
 int			print_error(int error_code, char c)
@@ -61,27 +63,6 @@ int			print_error(int error_code, char c)
 	else
 		print_error_extra(error_code);
 	return (0);
-}
-
-int			error_double(char c, int error_code)
-{
-	if (error_code == 1 && c == 'F')
-		write(2, "ERROR\nFloor texture/color is defined multiple times\n", 52);
-	if (error_code == 1 && c == 'C')
-		write(2, \
-		"ERROR\nceiling texture/color is defined multiple times\n", 54);
-	if (error_code == 1 && c == 'N')
-		write(2, "ERROR\nNorth texture is \
-		defined multiple times\n", 46);
-	if (error_code == 1 && c == 'S')
-		write(2, "ERROR\nSouth texture is defined multiple times\n", 46);
-	if (error_code == 1 && c == 'E')
-		write(2, "ERROR\nEast texture is defined multiple times\n", 45);
-	if (error_code == 1 && c == 'N')
-		write(2, "ERROR\nWest texture is defined multiple times\n", 45);
-	if (error_code == 1 && c == 'P')
-		write(2, "ERROR\nSprite texture is defined multiple times\n", 47);
-	return (1);
 }
 
 int			error_missing(int error_code)

@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 20:14:09 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/26 15:51:18 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,30 @@ static int			get_color(int fd, char c)
 	return ((0 << 24 | r << 16 | g << 8 | b));
 }
 
-static void			clg_floor(t_data *data, char c, int fd, t_error *err)
+static void			floor_get(t_data *data, char b, int fd, t_error *err)
 {
-	int new;
-
-	new = c;
-	read(fd, &new, 1);
-	while (new == ' ')
-		read(fd, &new, 1);
-	if (((*err).floor == 1 && c == 'F') || ((*err).clg == 1 && c == 'C'))
-		exit(error_double(c, 1));
-	if (c == 'F')
-	{
-		if ((new >= '0' && new <= '9') || new == '-')
-			(*data).textures.floor = get_color(fd, new);
-		else
-			(*data).textures.floor_tex = get_path(new, fd, data, &(*err).floor);
-		(*err).floor = 1;
-	}
+	while (b == ' ')
+		read(fd, &b, 1);
+	if ((*err).clg == 1)
+		exit(print_error(19, 0));
+	if ((b >= '0' && b <= '9') || b == '-')
+		(*data).textures.floor = get_color(fd, b);
 	else
-	{
-		if ((new >= '0' && new <= '9') || new == '-')
-			(*data).textures.clg = get_color(fd, new);
-		else
-			(*data).textures.clg_tex = get_path(new, fd, data, &((*err).clg));
-		(*err).clg = 1;
-	}
+		(*data).textures.floor_tex = get_path(b, fd, data, &((*err).clg));
+	(*err).floor = 1;
+}
+
+static void			clg_get(t_data *data, char b, int fd, t_error *err)
+{
+	while (b == ' ')
+		read(fd, &b, 1);
+	if ((*err).clg == 1)
+		exit(print_error(19, 0));
+	if ((b >= '0' && b <= '9') || b == '-')
+		(*data).textures.clg = get_color(fd, b);
+	else
+		(*data).textures.clg_tex = get_path(b, fd, data, &((*err).clg));
+	(*err).clg = 1;
 }
 
 void				get_textures(t_data *data, int fd, char c, t_error *error)
@@ -92,19 +90,15 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 
 	read(fd, &b, 1);
 	if (c == 'R')
-		get_dem(fd, c, data);
-	if (c == 'F' || c == 'C')
-		clg_floor(data, c, fd, error);
-	else if (c == 'S' && b != 'O' && ((b != '2' && \
-	error->sprite1) || (b == '2' && error->sprite2)))
-		exit(error_double('P', 1));
+		get_dem(fd, b, data);
+	if (c == 'F')
+		floor_get(data, b, fd, error);
+	if (c == 'C')
+		clg_get(data, b, fd, error);
 	else if (c == 'S' && b != 'O' && b != '2')
-		(*data).textures.sprite_1 = get_path(' ', fd, data, &(*error).sprite1);
+		(*data).textures.sprite_1 = get_path(b, fd, data, &(*error).sprite1);
 	else if (c == 'S' && b != 'O')
 		(*data).textures.sprite_2 = get_path(' ', fd, data, &(*error).sprite2);
-	else if ((c == 'N' && (*error).north) || (c == 'S' && (*error).south) \
-				|| (c == 'E' && (*error).east) || (c == 'W' && (*error).west))
-		exit(error_double(c, 1));
 	else if (c == 'N' && b == 'O')
 		(*data).textures.north = get_path(' ', fd, data, &(*error).north);
 	else if (c == 'S' && b == 'O')

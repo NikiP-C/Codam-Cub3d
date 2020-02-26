@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 19:18:29 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/26 16:12:37 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,6 @@ void				make_bitmap(t_data *data);
 void				map_checking(t_map_data *data);
 void				make_floor(t_map_data *mdata, t_data *data);
 int					ft_strcmp(const char *s1, const char *s2);
-int					error_double(char c, int error_code);
 int					error_missing(int error_code);
 t_map_data			*get_map(int fd, t_map_data *map_data, char c);
 void				get_dem(int fd, char c, t_data *data);

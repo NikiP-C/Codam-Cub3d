@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:16:55 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 16:54:48 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/26 16:34:38 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,23 @@ static int	get_dem_num(int fd, char *c)
 
 void		get_dem(int fd, char c, t_data *data)
 {
-	read(fd, &c, 1);
+	int max_x;
+	int max_y;
+
+	mlx_get_screen_size(data->mlx_data.mlx, &max_x, &max_y);
 	(*data).map_data.dem_x = get_dem_num(fd, &c);
-	if ((*data).map_data.dem_x > 2560)
-		(*data).map_data.dem_x = 2560;
 	if ((*data).map_data.dem_x <= 0)
 		exit(print_error(5, 0));
 	(*data).map_data.dem_y = get_dem_num(fd, &c);
 	if ((*data).map_data.dem_y <= 0)
 		exit(print_error(5, 0));
-	if ((*data).map_data.dem_y > 1440)
-		(*data).map_data.dem_y = 1440;
+	if (data->safe == 0)
+	{
+		if ((*data).map_data.dem_y > max_y)
+			(*data).map_data.dem_y = max_y;
+		if ((*data).map_data.dem_x > max_x)
+			(*data).map_data.dem_x = max_x;
+	}
 	while (c == ' ')
 		read(fd, &c, 1);
 	if (c != '\n')

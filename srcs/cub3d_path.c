@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/21 23:07:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/02/26 16:13:31 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*make_string_realloc(int fd, char b, char *str, int malloc_size)
 
 	i = 0;
 	if (str == NULL)
-		exit(print_error(16, 0));
+		exit(print_error(19, 0));
 	while (b == ' ')
 		read(fd, &b, 1);
 	while (b != '\n' && b != '\0')
@@ -54,6 +54,8 @@ t_texture	get_path(char b, int fd, t_data *data, int *error)
 	char		*str;
 	t_texture	tex;
 
+	if (*error == 1)
+		exit(print_error(19, 0));
 	ft_bzero(&tex, sizeof(t_texture));
 	*error = 1;
 	str = ft_calloc(sizeof(char), 20);
