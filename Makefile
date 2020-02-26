@@ -6,7 +6,7 @@
 #    By: nphilipp <nphilipp@student_bonus.codam.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/06 14:01:22 by nphilipp       #+#    #+#                 #
-#    Updated: 2020/02/25 17:01:18 by nphilipp      ########   odam.nl          #
+#    Updated: 2020/02/26 14:32:57 by nphilipp      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,17 +65,17 @@ INC = /minilibx/ -Lminilibx -lmlx
 
 all: $(NAME)
 
-$(NAME): libmx
+$(NAME):
+	make -C minilibx
+	mv minilibx/libmlx.dylib .
 	gcc $(FLAGS) $(SRC) -I $(INC) -o $(NAME)
 
 bonus: $(BONUS)
 
-$(BONUS): libmx
-	gcc $(FLAGS) $(SRC_BONUS) -I $(INC) -o $(BONUS)
-
-libmx:
+$(BONUS):
 	make -C minilibx
 	mv minilibx/libmlx.dylib .
+	gcc $(FLAGS) $(SRC_BONUS) -I $(INC) -o $(BONUS)
 
 clean:
 	make -C minilibx clean
