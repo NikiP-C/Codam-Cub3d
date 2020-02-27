@@ -6,7 +6,7 @@
 #    By: nphilipp <nphilipp@student_bonus.codam.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/06 14:01:22 by nphilipp       #+#    #+#                 #
-#    Updated: 2020/02/26 14:32:57 by nphilipp      ########   odam.nl          #
+#    Updated: 2020/02/27 13:36:53 by nphilipp      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ $(BONUS):
 
 clean:
 	make -C minilibx clean
-	rm libmlx.dylib
+	rm -f libmlx.dylib
 
 fclean: clean
 	rm -f $(NAME)
