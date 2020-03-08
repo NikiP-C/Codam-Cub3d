@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:17:20 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 16:26:30 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/04 13:57:02 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int					check_map(t_map_data *data)
 		}
 		else if (data->map[i] == '\n')
 			check_line_length(&current_line, data, i);
-		else if (data->map[i] < '0' || data->map[i] > '3')
+		else if ((data->map[i] < '0' || data->map[i] > '3') \
+		&& data->map[i] != ' ')
 			exit(print_error(3, data->map[i]));
 		i++;
 		current_line++;

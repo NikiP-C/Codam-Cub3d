@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/26 16:12:37 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/07 15:36:34 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <math.h>
 # include "minilibx/mlx.h"
 
@@ -100,6 +99,7 @@ typedef struct		s_map_data
 	char			*map;
 	t_vs			*spr;
 	char			**map2d;
+	int				spaces;
 	int				amouth_of_sprites;
 }					t_map_data;
 
@@ -183,6 +183,7 @@ typedef struct		s_error
 	int				sprite2;
 	int				clg;
 	int				floor;
+	int				res;
 }					t_error;
 
 typedef struct		s_data
@@ -225,7 +226,7 @@ void				make_floor(t_map_data *mdata, t_data *data);
 int					ft_strcmp(const char *s1, const char *s2);
 int					error_missing(int error_code);
 t_map_data			*get_map(int fd, t_map_data *map_data, char c);
-void				get_dem(int fd, char c, t_data *data);
+void				get_dem(int fd, char c, t_data *data, t_error *error);
 t_texture			get_path(char b, int fd, t_data *data, int *error);
 t_map_data			*get_map(int fd, t_map_data *map_data, char c);
 void				get_textures(t_data *data, int fd, char c, t_error *error);
@@ -233,6 +234,7 @@ void				death_screen(t_data *data);
 int					flood_fill(char **map, int x, int y);
 void				find_sprites(t_map_data *data);
 int					free_mlx_exit(int error_code, t_data *data);
+int					error_message(char *str);
 
 /*
 ** Keypress functions

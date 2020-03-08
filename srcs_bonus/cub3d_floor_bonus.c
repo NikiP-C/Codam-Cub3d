@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 19:42:14 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 19:04:15 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/08 13:36:21 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	put_fc_pixels(t_map_data *mdata, t_data *data, \
 	char			*str;
 	unsigned int	color;
 
-	if (!(*data).textures.floor)
+	if ((*data).textures.floor == -1)
 	{
 		str = (*data).textures.floor_tex.img_addr + ((*data).textures.floor_tex\
 		.size_line * tex_dem.y + tex_dem.x * \

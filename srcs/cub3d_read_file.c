@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 11:48:50 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 16:59:04 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/08 13:11:57 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ static void		check_everything(t_error *error)
 		exit(error_missing('E'));
 	if ((*error).north == 0)
 		exit(error_missing('N'));
+	if ((*error).sprite1 == 0)
+		exit(error_missing('P'));
+	if (error->res == 0)
+		exit(error_missing('R'));
 }
 
 static int		open_file(char *str)
@@ -72,14 +76,17 @@ t_data			*read_file(t_data *data, char *str)
 		exit(print_error(8, 0));
 	while (read(fd, &c, 1))
 	{
-		if (ft_strchr_no_null("NSEWFCR", c))
+		if (c == ' ')
+			data->map_data.spaces++;
+		else if (ft_strchr_no_null("NSEWFCR", c))
 			get_textures(data, fd, c, &error_check);
 		else if (ft_strchr_no_null("012", c))
 			return (map_found(&error_check, data, c, fd));
-		else if (c != '\n' && c != ' ')
+		else if (c == '\n' && data->map_data.spaces != 0)
+			exit(error_message("Spaces found on empty line\n"));
+		else if (c != '\n')
 			exit(print_error(3, c));
 	}
-	close(fd);
-	exit(print_error(9, 0));
+	exit(print_error(9, fd));
 	return (data);
 }

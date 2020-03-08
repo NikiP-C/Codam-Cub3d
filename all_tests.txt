@@ -1,0 +1,8 @@
+--- R ---
+	- remove it
+	- one number
+	- no numbers
+	- one negative
+	- 0 
+	- above max - with/without save
+	

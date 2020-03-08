@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/30 12:13:49 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/26 16:12:32 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/07 15:25:51 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <math.h>
 # include "minilibx/mlx.h"
 
@@ -101,6 +100,7 @@ typedef struct		s_map_data
 	t_vs			*spr;
 	char			**map2d;
 	int				amouth_of_sprites;
+	int				spaces;
 }					t_map_data;
 
 typedef struct		s_texture
@@ -183,6 +183,7 @@ typedef struct		s_error
 	int				sprite2;
 	int				clg;
 	int				floor;
+	int				res;
 }					t_error;
 
 typedef struct		s_data
@@ -195,11 +196,12 @@ typedef struct		s_data
 	t_movement		move;
 	t_keys			keys;
 	int				safe;
+	int				fd;
 }					t_data;
 
 int					check_map(t_map_data *data);
 void				make_frame(t_data *data);
-t_data				*read_file(t_data *data, char *str);
+t_data				*read_file(t_data *data);
 t_data				*pick_color(t_data *data, int x);
 void				put_pixel(t_data *data, int x, int y, int color);
 t_data				*pick_texture(t_data *data, int x, t_texture *tex);
@@ -224,7 +226,7 @@ void				make_floor(t_map_data *mdata, t_data *data);
 int					ft_strcmp(const char *s1, const char *s2);
 int					error_missing(int error_code);
 t_map_data			*get_map(int fd, t_map_data *map_data, char c);
-void				get_dem(int fd, char c, t_data *data);
+void				get_dem(int fd, char c, t_data *data, t_error *error);
 t_texture			get_path(char b, int fd, t_data *data, int *error);
 t_map_data			*get_map(int fd, t_map_data *map_data, char c);
 void				get_textures(t_data *data, int fd, char c, t_error *error);

@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/18 15:18:47 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 15:50:33 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/01 18:38:53 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ int		key_press(int keycode, void *param)
 	t_data *data;
 
 	data = param;
-	if (keycode == 13 || keycode == 126)
+	if (keycode == 13)
 		(*data).keys.walk_forward = 1;
-	if (keycode == 1 || keycode == 125)
+	if (keycode == 1)
 		(*data).keys.walk_backwards = 1;
 	if (keycode == 123)
 		(*data).keys.look_left = 1;
 	if (keycode == 124)
 		(*data).keys.look_right = 1;
-	if (keycode == 53 || keycode == 12)
+	if (keycode == 53)
 		end_session(param);
 	if (keycode == 2)
 		(*data).keys.walk_left = 1;

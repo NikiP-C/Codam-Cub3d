@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/21 15:35:06 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/01 17:11:35 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		find_sprites(t_map_data *data)
 		i = 0;
 		while (data->map2d[j][i] != '\0')
 		{
-			if (data->map2d[j][i] == '2' || data->map2d[j][i] == '3')
+			if (data->map2d[j][i] == '2')
 			{
 				fill_sprite_data(&data->spr[l], data->map2d[j][i], i, j);
 				l++;

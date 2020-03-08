@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/06 13:59:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/25 19:48:59 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/04 14:06:05 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ static int	check_line(char *str, int *i, int fd, t_map_data *data)
 
 	ret = 1;
 	read(fd, &c, 1);
-	while (c == ' ' && ret == 1)
-	{
-		ret = read(fd, &c, 1);
-	}
-	if (c >= '0' && c <= '3')
+	if ((c >= '0' && c <= '3') || c == ' ')
 	{
 		(*i)++;
 		str[*i] = c;
@@ -47,14 +43,21 @@ static int	check_line(char *str, int *i, int fd, t_map_data *data)
 	exit(print_error(6, 0));
 }
 
-char		*prepare_str(char c, t_map_data *map_data)
+char		*prepare_str(char c, t_map_data *map_data, int *i)
 {
 	char *str;
 
 	str = ft_calloc(100, 1);
 	if (str == NULL)
 		exit(print_error(16, 0));
-	str[0] = c;
+	while (map_data->spaces)
+	{
+		str[*i] = ' ';
+		map_data->spaces--;
+		(*i)++;
+	}
+	str[*i] = c;
+	(*i)++;
 	if (c == '2' || c == '3')
 		map_data->amouth_of_sprites++;
 	return (str);
@@ -67,21 +70,18 @@ t_map_data	*get_map(int fd, t_map_data *map_data, char c)
 	int		malloc_size;
 
 	malloc_size = 100;
-	i = 1;
-	str = prepare_str(c, map_data);
+	i = 0;
+	str = prepare_str(c, map_data, &i);
 	while (read(fd, &c, 1))
 	{
-		if (c != ' ')
-		{
-			str[i] = c;
-			if (c == '2' || c == '3')
-				map_data->amouth_of_sprites++;
-			if (c == '\n')
-				check_line(str, &i, fd, map_data);
-			i++;
-			if (i == (malloc_size - 1))
-				str = end_string(&malloc_size, str, i);
-		}
+		str[i] = c;
+		if (c == '2' || c == '3')
+			map_data->amouth_of_sprites++;
+		if (c == '\n')
+			check_line(str, &i, fd, map_data);
+		i++;
+		if (i == (malloc_size - 2))
+			str = end_string(&malloc_size, str, i);
 	}
 	str[i] = '\0';
 	map_data->map = str;

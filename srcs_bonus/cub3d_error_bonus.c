@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 20:26:51 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/26 16:01:05 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/05 17:07:08 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	print_error_extra(int error_code)
 		write(2, "ERROR\nArgument count is not 2 or 3\n", 35);
 	else if (error_code == 19)
 		write(2, "ERROR\nOne of your elements is declared twice\n", 45);
+	else if (error_code == 20)
+		write(2, "ERROR\nOne of the dimensions is bigger then 16384\n", 49);
 }
 
 int			print_error(int error_code, char c)
@@ -67,6 +69,8 @@ int			print_error(int error_code, char c)
 
 int			error_missing(int error_code)
 {
+	if (error_code == 'R')
+		write(2, "ERROR\nMissing resolution\n", 25);
 	if (error_code == 'C')
 		write(2, "ERROR\nMissing clg texture/color\n", 32);
 	else if (error_code == 'F')
@@ -81,5 +85,7 @@ int			error_missing(int error_code)
 		write(2, "ERROR\nMissing west texture\n", 27);
 	else if (error_code == 'P')
 		write(2, "ERROR\nMissing sprite texture\n", 29);
+	else if (error_code == 'B')
+		write(2, "ERROR\nOne of the RGB colors is missing\n", 39);
 	return (1);
 }

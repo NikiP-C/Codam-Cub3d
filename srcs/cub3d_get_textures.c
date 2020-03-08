@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:01:52 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/26 15:57:01 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/07 14:39:05 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int			get_num(int fd, char *c)
 		neg = -1;
 		read(fd, c, 1);
 	}
+	if (*c < '0' || *c > '9')
+		exit(error_missing('B'));
 	while (*c >= '0' && *c <= '9')
 	{
 		num = num * 10 + (*c - '0');
@@ -46,11 +48,11 @@ static int			get_color(int fd, char c)
 	t = 0;
 	r = get_num(fd, &c);
 	if (c != ',')
-		exit(print_error(3, c));
+		exit(error_missing(','));
 	read(fd, &c, 1);
 	g = get_num(fd, &c);
 	if (c != ',')
-		exit(print_error(3, c));
+		exit(error_missing(','));
 	read(fd, &c, 1);
 	b = get_num(fd, &c);
 	if (c != '\n')
@@ -64,10 +66,9 @@ static void			floor_get(t_data *data, char b, int fd, t_error *err)
 {
 	while (b == ' ')
 		read(fd, &b, 1);
-	if ((*err).clg == 1)
+	if ((*err).floor == 1)
 		exit(print_error(19, 0));
-	if ((b >= '0' && b <= '9') || b == '-')
-		(*data).textures.floor = get_color(fd, b);
+	(*data).textures.floor = get_color(fd, b);
 	(*err).floor = 1;
 }
 
@@ -77,8 +78,7 @@ static void			clg_get(t_data *data, char b, int fd, t_error *err)
 		read(fd, &b, 1);
 	if ((*err).clg == 1)
 		exit(print_error(19, 0));
-	if ((b >= '0' && b <= '9') || b == '-')
-		(*data).textures.clg = get_color(fd, b);
+	(*data).textures.clg = get_color(fd, b);
 	(*err).clg = 1;
 }
 
@@ -86,12 +86,13 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 {
 	char b;
 
+	data->map_data.spaces = 0;
 	read(fd, &b, 1);
 	if (c == 'R')
-		get_dem(fd, b, data);
-	if (c == 'F')
+		get_dem(fd, b, data, error);
+	else if (c == 'F')
 		floor_get(data, b, fd, error);
-	if (c == 'C')
+	else if (c == 'C')
 		clg_get(data, b, fd, error);
 	else if (c == 'S' && b != 'O')
 		(*data).textures.sprite_1 = get_path(b, fd, data, &(*error).sprite1);
@@ -103,4 +104,6 @@ void				get_textures(t_data *data, int fd, char c, t_error *error)
 		(*data).textures.east = get_path(' ', fd, data, &(*error).east);
 	else if (c == 'W' && b == 'E')
 		(*data).textures.west = get_path(' ', fd, data, &(*error).west);
+	else
+		exit(print_error(13, 0));
 }

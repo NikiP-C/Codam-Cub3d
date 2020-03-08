@@ -6,7 +6,7 @@
 #    By: nphilipp <nphilipp@student_bonus.codam.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/06 14:01:22 by nphilipp       #+#    #+#                 #
-#    Updated: 2020/02/27 13:36:53 by nphilipp      ########   odam.nl          #
+#    Updated: 2020/03/07 15:23:18 by nphilipp      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,30 +59,30 @@ SRC =	srcs/cub3d_raycaster.c \
 		srcs/cub3d_find_sprites.c \
 		srcs/cub3d_path.c
 
-FLAGS = -O3 -Wall -Werror -Wextra
+FLAGS = -O3 -Wall -Werror -Wextra -g -fsanitize=address
 
 INC = /minilibx/ -Lminilibx -lmlx
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(SRC)
 	make -C minilibx
 	mv minilibx/libmlx.dylib .
 	gcc $(FLAGS) $(SRC) -I $(INC) -o $(NAME)
 
 bonus: $(BONUS)
 
-$(BONUS):
+$(BONUS): $(SRC_BONUS)
 	make -C minilibx
 	mv minilibx/libmlx.dylib .
 	gcc $(FLAGS) $(SRC_BONUS) -I $(INC) -o $(BONUS)
 
 clean:
 	make -C minilibx clean
-	rm -f libmlx.dylib
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(BONUS)
+	rm -f libmlx.dylib
 
 re: fclean all

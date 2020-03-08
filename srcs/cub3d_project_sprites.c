@@ -6,7 +6,7 @@
 /*   By: nphilipp <nphilipp@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/31 23:17:09 by nphilipp       #+#    #+#                */
-/*   Updated: 2020/02/22 16:39:36 by nphilipp      ########   odam.nl         */
+/*   Updated: 2020/03/03 21:19:40 by nphilipp      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,7 @@ void	project_sprites(t_data *data, int *order)
 		get_info(&s_data, data, (*data).map_data.spr[order[i]]);
 		sprite_start_end(data, &s_data);
 		coords.x = s_data.drawstart_x;
-		if ((*data).map_data.spr[order[i]].sprite == '2')
-		{
-			place_pixel(&s_data, data, &coords, &(*data).textures.sprite_1);
-		}
-		else
-		{
-			place_pixel(&s_data, data, &coords, &(*data).textures.sprite_2);
-		}
+		place_pixel(&s_data, data, &coords, &(*data).textures.sprite_1);
 		i++;
 	}
 }
